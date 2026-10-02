@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Playground — Free Online 3D Scene Editor | Browser 3D Tool | Universe Tools</title>
+  <meta name="description" content="Interactive 3D playground in your browser. Add geometric shapes, change materials and lighting, orbit and zoom. Powered by Three.js. Free online, no download." />
+  <meta name="keywords" content="online 3d editor free, browser 3d tool, three.js playground, 3d object viewer online, interactive 3d scene, free webgl 3d tool" />
+  <link rel="canonical" href="https://3d.universeinvedors.tech/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="3D Playground — Free Online Interactive 3D Editor" />
+  <meta property="og:description" content="Experiment with 3D shapes, materials and lighting in your browser. Three.js powered. Free and instant." />
+  <meta property="og:url" content="https://3d.universeinvedors.tech/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0a0e1a" />
+  <link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"3D Playground","description":"Free interactive 3D editor in your browser. Add shapes, adjust materials and lighting. Powered by Three.js.","url":"https://3d.universeinvedors.tech","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <meta name="google-adsense-account" content="ca-pub-8759032363251002" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#0a0e1a;color:#e6edf3;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+    .topbar{display:flex;align-items:center;gap:.75rem;padding:.55rem 1rem;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(13,17,23,.97);backdrop-filter:blur(12px);z-index:100;flex-shrink:0;flex-wrap:wrap}
+    .logo{font-size:.82rem;font-weight:700;white-space:nowrap}
+    .btn{padding:.35rem .85rem;border-radius:7px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+    .btn-screenshot{background:#f97316;color:#000}
+    .btn-screenshot:hover{background:#ea6c10}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:200px;shrink:0;padding:1rem;border-right:1px solid rgba(255,255,255,.08);overflow-y:auto;background:#0d1117;display:flex;flex-direction:column;gap:.85rem}
+    .section-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8b949e;margin-bottom:.35rem}
+    .shape-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.3rem}
+    .shape-btn{padding:.4rem 0;border-radius:7px;font-size:.9rem;cursor:pointer;border:1px solid rgba(255,255,255,.08);background:#161b22;text-align:center;transition:all .15s}
+    .shape-btn:hover,.shape-btn.active{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4)}
+    .mat-btn{width:100%;text-align:left;padding:.45rem .6rem;border-radius:8px;font-size:.78rem;cursor:pointer;border:1px solid rgba(255,255,255,.08);background:#161b22;color:#8b949e;margin-bottom:.25rem;transition:all .15s}
+    .mat-btn:hover,.mat-btn.active{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.35);color:#f97316}
+    .color-row{display:flex;align-items:center;gap:.5rem}
+    .color-row input[type=color]{width:36px;height:36px;border-radius:7px;border:1px solid rgba(255,255,255,.08);background:transparent;cursor:pointer;padding:.15rem}
+    .slider-label{font-size:.72rem;color:#8b949e;margin-bottom:.25rem}
+    input[type=range]{width:100%;accent-color:#f97316}
+    .toggle-row{display:flex;align-items:center;justify-content:space-between}
+    .toggle-row span{font-size:.78rem;color:#8b949e}
+    .toggle{position:relative;width:36px;height:20px;cursor:pointer}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle-track{position:absolute;inset:0;border-radius:100px;background:#21262d;transition:.2s}
+    .toggle input:checked ~ .toggle-track{background:#f97316}
+    .toggle-thumb{position:absolute;width:14px;height:14px;top:3px;left:3px;background:#fff;border-radius:50%;transition:.2s}
+    .toggle input:checked ~ .toggle-thumb{left:19px}
+    .canvas-wrap{flex:1;position:relative}
+    canvas{width:100%;height:100%;display:block}
+    .loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;background:#0a0e1a}
+    .spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.1);border-top-color:#f97316;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hint{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);font-size:.7rem;color:#8b949e;background:rgba(13,17,23,.8);padding:.3rem .75rem;border-radius:100px;pointer-events:none;white-space:nowrap}
+    @media(max-width:640px){.sidebar{display:none}}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">🎲 <a href="https://universeinvedors.tech/tools" style="color:inherit;text-decoration:none">Universe Tools</a> / 3D Playground</div>
+  <div style="flex:1"></div>
+  <button class="btn btn-screenshot" onclick="screenshot()">📷 Screenshot</button>
+</header>
+
+<main class="main">
+  <aside class="sidebar">
+    <div>
+      <p class="section-label">Shape</p>
+      <div class="shape-grid">
+        <div class="shape-btn active" onclick="setShape('box',this)" title="Box">⬛</div>
+        <div class="shape-btn" onclick="setShape('sphere',this)" title="Sphere">⚫</div>
+        <div class="shape-btn" onclick="setShape('cylinder',this)" title="Cylinder">🔵</div>
+        <div class="shape-btn" onclick="setShape('torus',this)" title="Torus">◎</div>
+        <div class="shape-btn" onclick="setShape('cone',this)" title="Cone">🔺</div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">Material</p>
+      <div class="mat-btn active" onclick="setMat('standard',this)">Standard</div>
+      <div class="mat-btn" onclick="setMat('wireframe',this)">Wireframe</div>
+      <div class="mat-btn" onclick="setMat('normal',this)">Normal Map</div>
+      <div class="mat-btn" onclick="setMat('phong',this)">Phong</div>
+    </div>
+    <div id="colorRow">
+      <p class="section-label">Colour</p>
+      <div class="color-row">
+        <input type="color" id="colorPicker" value="#3b82f6" oninput="setColor(this.value)">
+        <span id="colorHex" style="font-size:.75rem;color:#8b949e;font-family:monospace">#3b82f6</span>
+      </div>
+    </div>
+    <div>
+      <p class="slider-label">Ambient light: <span id="ambVal">50%</span></p>
+      <input type="range" min="0" max="200" value="50" oninput="setAmbient(this.value)">
+    </div>
+    <div class="toggle-row">
+      <span>Auto-rotate</span>
+      <label class="toggle">
+        <input type="checkbox" checked onchange="autoRot=this.checked">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+    <p style="font-size:.68rem;color:#8b949e">Drag to orbit<br>Scroll to zoom</p>
+  </aside>
+
+  <div class="canvas-wrap">
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+      <p style="font-size:.85rem;color:#8b949e">Loading Three.js…</p>
+    </div>
+    <canvas id="c"></canvas>
+    <div class="hint">Drag · Orbit &nbsp;|&nbsp; Scroll · Zoom &nbsp;|&nbsp; Touch · Supported</div>
+  </div>
+</main>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169/build/three.module.js'
+
+const canvas = document.getElementById('c')
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight)
+renderer.shadowMap.enabled = true
+
+const scene = new THREE.Scene()
+scene.background = new THREE.Color('#0a0e1a')
+
+const camera = new THREE.PerspectiveCamera(60, canvas.parentElement.clientWidth / canvas.parentElement.clientHeight, .1, 100)
+camera.position.set(0, 0, 4)
+
+// Lights
+const ambient = new THREE.AmbientLight(0xffffff, .5)
+scene.add(ambient)
+const dir = new THREE.DirectionalLight(0xffffff, 1)
+dir.position.set(5,5,5)
+scene.add(dir)
+const point = new THREE.PointLight(0x3b82f6, 1.5, 20)
+point.position.set(-3,3,3)
+scene.add(point)
+
+const grid = new THREE.GridHelper(10,20,0x1e2535,0x1e2535)
+grid.position.y = -1.5
+scene.add(grid)
+
+let mesh = null, autoRot = true
+let shape = 'box', mat = 'standard', color = '#3b82f6'
+
+function buildMesh() {
+  if (mesh) scene.remove(mesh)
+  const geos = {box:new THREE.BoxGeometry(1.6,1.6,1.6),sphere:new THREE.SphereGeometry(1,32,32),cylinder:new THREE.CylinderGeometry(.8,.8,1.8,32),torus:new THREE.TorusGeometry(.9,.35,16,100),cone:new THREE.ConeGeometry(.9,1.8,32)}
+  const mats = {standard:new THREE.MeshStandardMaterial({color,metalness:.2,roughness:.5}),wireframe:new THREE.MeshBasicMaterial({color,wireframe:true}),normal:new THREE.MeshNormalMaterial(),phong:new THREE.MeshPhongMaterial({color,shininess:80})}
+  mesh = new THREE.Mesh(geos[shape],mats[mat])
+  scene.add(mesh)
+}
+buildMesh()
+
+// Orbit
+let dragging=false,prevMouse={x:0,y:0},sph={theta:0,phi:Math.PI/2},r=4
+canvas.addEventListener('mousedown',e=>{dragging=true;prevMouse={x:e.clientX,y:e.clientY}})
+canvas.addEventListener('mouseup',()=>dragging=false)
+canvas.addEventListener('mousemove',e=>{
+  if(!dragging)return
+  sph.theta-=(e.clientX-prevMouse.x)*.008
+  sph.phi=Math.max(.1,Math.min(Math.PI-.1,sph.phi+(e.clientY-prevMouse.y)*.008))
+  camera.position.set(r*Math.sin(sph.phi)*Math.sin(sph.theta),r*Math.cos(sph.phi),r*Math.sin(sph.phi)*Math.cos(sph.theta))
+  camera.lookAt(0,0,0); prevMouse={x:e.clientX,y:e.clientY}
+})
+canvas.addEventListener('wheel',e=>{ r=Math.max(1.5,Math.min(12,r+e.deltaY*.01)); camera.position.normalize().multiplyScalar(r) })
+
+// Touch
+let lt=null
+canvas.addEventListener('touchstart',e=>lt=e.touches[0])
+canvas.addEventListener('touchmove',e=>{
+  if(!lt)return; const t=e.touches[0]
+  sph.theta-=(t.clientX-lt.clientX)*.008
+  sph.phi=Math.max(.1,Math.min(Math.PI-.1,sph.phi+(t.clientY-lt.clientY)*.008))
+  camera.position.set(r*Math.sin(sph.phi)*Math.sin(sph.theta),r*Math.cos(sph.phi),r*Math.sin(sph.phi)*Math.cos(sph.theta))
+  camera.lookAt(0,0,0); lt=t; e.preventDefault()
+},{passive:false})
+
+new ResizeObserver(()=>{
+  renderer.setSize(canvas.parentElement.clientWidth,canvas.parentElement.clientHeight)
+  camera.aspect=canvas.parentElement.clientWidth/canvas.parentElement.clientHeight
+  camera.updateProjectionMatrix()
+}).observe(canvas.parentElement)
+
+document.getElementById('loadingOverlay').style.display = 'none'
+
+function animate() {
+  requestAnimationFrame(animate)
+  if(autoRot&&mesh){mesh.rotation.y+=.008;mesh.rotation.x+=.003}
+  renderer.render(scene,camera)
+}
+animate()
+
+window.setShape=(s,btn)=>{shape=s;document.querySelectorAll('.shape-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');buildMesh()}
+window.setMat=(m,btn)=>{mat=m;document.querySelectorAll('.mat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('colorRow').style.display=m==='normal'?'none':'';buildMesh()}
+window.setColor=(c)=>{color=c;document.getElementById('colorHex').textContent=c;buildMesh()}
+window.setAmbient=(v)=>{ambient.intensity=v/100;document.getElementById('ambVal').textContent=v+'%'}
+window.__autoRot=v=>{autoRot=v}
+Object.defineProperty(window,'autoRot',{set:v=>autoRot=v,get:()=>autoRot})
+window.screenshot=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.download='3d-scene.png';a.href=canvas.toDataURL();a.click()}
+</script>
+</body>
+</html>
