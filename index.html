@@ -1,16 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>3D Playground — Free Online 3D Scene Editor | Three.js + model-viewer | Universe Invedors Tools</title>
-<meta name="description" content="Interactive 3D playground in your browser. Create scenes with shapes, materials and lighting using Three.js. Load GLTF/GLB models with model-viewer. Orbit, zoom, screenshot. Free online."/>
-<meta name="keywords" content="3D editor online free,browser 3D tool,Three.js playground,GLTF viewer online,GLB viewer,interactive 3D scene,WebGL 3D editor free,model viewer online"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>3D Studio — Scene Builder, GLTF/OBJ Viewer, Particle Systems, Physics, WebXR | Universe Invedors</title>
+<meta name="description" content="Free online 3D studio powered by Three.js. Build 3D scenes, view GLTF/OBJ models, create particle systems (Galaxy, Snow, Fire), simulate physics with cannon-es, and explore WebXR AR/VR."/>
+<meta name="keywords" content="3D scene builder online,Three.js editor,GLTF viewer browser,WebXR AR VR,particle system 3D,physics simulation browser,online 3D tool free,model viewer web"/>
 <link rel="canonical" href="https://3d.universeinvedors.tech/"/>
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
 <meta name="author" content="Universe Invedors"/>
-<meta property="og:title" content="3D Playground — Free Online 3D Scene Editor"/>
-<meta property="og:description" content="Experiment with 3D shapes, materials and lighting. Load GLTF/GLB models. Three.js powered. Free."/>
+<meta property="og:title" content="3D Studio — Scene Builder, Model Viewer, Particles, Physics, WebXR"/>
+<meta property="og:description" content="Three.js powered 3D studio: build scenes, view GLTF models, particle systems, physics and WebXR."/>
 <meta property="og:url" content="https://3d.universeinvedors.tech/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:image" content="https://universeinvedors.tech/og-image.jpg"/>
@@ -22,334 +21,1015 @@
 <meta name="theme-color" content="#090c13"/>
 <meta name="google-adsense-account" content="ca-pub-8759032363251002"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"3D Playground","url":"https://3d.universeinvedors.tech","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"3D Playground","item":"https://3d.universeinvedors.tech"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"3D Studio","url":"https://3d.universeinvedors.tech","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["3D Scene Builder","GLTF/GLB Model Viewer","Particle Systems: Galaxy, Snow, Fire","Physics Simulation","WebXR AR/VR support","Screenshot export"],"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"3D Studio","item":"https://3d.universeinvedors.tech"}]}]</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#090c13;--surf:#0d1117;--elev:#141b28;--card:#1a2235;--inp:#111827;
   --t1:#f0f4ff;--t2:#a8b5cc;--t3:#64748b;--t4:#3d4f6e;
-  --acc:#f97316;--acc-h:#fb923c;--acc-glow:rgba(249,115,22,.25);
-  --green:#10b981;--blue:#3b82f6;--violet:#8b5cf6;
-  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.14);
-  --font:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  --r:10px;--th:52px;--sw:220px;--tr:180ms cubic-bezier(.4,0,.2,1);
+  --acc:#f97316;--acc-h:#fb923c;--acc-glow:rgba(249,115,22,.22);
+  --green:#10b981;--blue:#3b82f6;--violet:#8b5cf6;--red:#ef4444;
+  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.13);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --r:8px;--th:50px;--sw:210px;--rw:200px;--tr:160ms cubic-bezier(.4,0,.2,1);
 }
 html{font-size:16px}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
-.tb{height:var(--th);background:rgba(9,12,19,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;padding:0 .85rem;flex-shrink:0;z-index:200}
-.logo{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--t1);text-decoration:none;white-space:nowrap}
-.logo:hover{color:var(--acc-h);text-decoration:none}
-.sp{flex:1}
-.etabs{display:flex;gap:.1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);padding:3px}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.22)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+
+/* TOPBAR */
+.topbar{height:var(--th);background:rgba(9,12,19,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;padding:0 .75rem;flex-shrink:0;z-index:200}
+.logo{font-size:.82rem;font-weight:700;color:var(--t1);text-decoration:none;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:.4rem}
+.logo:hover{color:var(--acc-h)}
+.etabs{display:flex;gap:.1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);padding:3px;flex-shrink:1;overflow-x:auto}
 .et{padding:.26rem .65rem;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t3);white-space:nowrap;transition:all var(--tr)}
 .et:hover{background:rgba(255,255,255,.06);color:var(--t2)}
-.et.active{background:var(--acc);color:#fff;box-shadow:0 0 10px var(--acc-glow)}
-.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.38rem .85rem;border-radius:var(--r);font-size:.75rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr);white-space:nowrap}
-.bg{background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)}
-.bg:hover{background:rgba(255,255,255,.09);border-color:var(--bh);color:var(--t1)}
-.bp{background:var(--acc);color:#fff}
-.bp:hover{background:var(--acc-h)}
-.bsm{padding:.26rem .6rem;font-size:.68rem}
-/* Layout */
-.main{display:flex;flex:1;overflow:hidden}
-.sb{width:var(--sw);background:var(--surf);border-right:1px solid var(--border);overflow-y:auto;padding:.65rem .55rem;flex-shrink:0}
-.sec{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:.5rem .3rem .2rem}
-/* Shape grid */
-.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:.28rem;margin-bottom:.4rem}
-.sh{padding:.38rem 0;border-radius:8px;font-size:.88rem;cursor:pointer;border:1px solid var(--border);background:var(--card);text-align:center;transition:all var(--tr)}
-.sh:hover,.sh.active{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4)}
-/* Mat buttons */
-.mb{width:100%;text-left;padding:.4rem .6rem;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--t3);font-size:.78rem;cursor:pointer;margin-bottom:.25rem;transition:all var(--tr);text-align:left}
-.mb:hover,.mb.active{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:var(--acc-h)}
-/* Slider */
-.sr{margin-bottom:.65rem}
-.srh{display:flex;justify-content:space-between;margin-bottom:.22rem}
-.srl{font-size:.7rem;font-weight:600;color:var(--t3)}
-.srv{font-size:.7rem;color:var(--acc-h);font-weight:700;font-family:monospace}
-input[type=range]{width:100%;accent-color:var(--acc)}
-/* Canvas */
-.cv-wrap{flex:1;position:relative;overflow:hidden}
-canvas#c{width:100%;height:100%;display:block;cursor:grab}
-canvas#c:active{cursor:grabbing}
-.overlay{position:absolute;top:.75rem;left:.75rem;display:flex;gap:.4rem;flex-wrap:wrap}
-.ov-badge{padding:.22rem .55rem;border-radius:6px;font-size:.68rem;font-weight:700;background:rgba(9,12,19,.8);border:1px solid var(--border);color:var(--t3)}
-.loading-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;background:var(--bg)}
-.spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* model-viewer mode */
-#mv-wrap{flex:1;display:none}
-model-viewer{width:100%;height:100%;background-color:#090c13}
-/* Statusbar */
-.statusbar{display:flex;align-items:center;gap:.75rem;padding:.25rem .85rem;background:var(--surf);border-top:1px solid var(--border);font-size:.68rem;color:var(--t3);flex-shrink:0}
-.sdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.seo-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .75rem;padding:.4rem .85rem;border-top:1px solid var(--border);background:var(--surf);font-size:.67rem;color:var(--t3);flex-shrink:0}
-.seo-footer a{color:var(--t3)}.seo-footer a:hover{color:var(--t2)}
-.sfl{display:flex;flex-wrap:wrap;gap:.2rem .6rem}
-.toasts{position:fixed;bottom:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.4rem;pointer-events:none}
-.toast{padding:.55rem .9rem;border-radius:var(--r);font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--t1);box-shadow:0 8px 32px rgba(0,0,0,.5);animation:tin .22s ease}
-.toast.ok{border-color:rgba(16,185,129,.3);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.3);color:#f87171}
+.et.active{background:var(--acc);color:#000;box-shadow:0 0 10px var(--acc-glow)}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .75rem;border-radius:var(--r);font-size:.73rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr);white-space:nowrap}
+.bg{background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)}.bg:hover{background:rgba(255,255,255,.09);border-color:var(--bh);color:var(--t1)}
+.bp{background:var(--acc);color:#000}.bp:hover{background:var(--acc-h)}
+.bsm{padding:.22rem .55rem;font-size:.68rem}
+
+/* LAYOUT */
+.main{display:flex;flex:1;overflow:hidden;position:relative}
+.sidebar{width:var(--sw);background:var(--surf);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;display:flex;flex-direction:column;gap:.1rem;padding:.5rem .4rem}
+.right-panel{width:var(--rw);background:var(--surf);border-left:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:.5rem .45rem}
+.canvas-wrap{flex:1;position:relative;overflow:hidden}
+#three-canvas{width:100%;height:100%;display:block}
+#viewer-wrap{width:100%;height:100%;display:none}
+#model-viewer-el{width:100%;height:100%;background:var(--bg)}
+
+/* SECTIONS */
+.sec{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:.4rem .2rem .15rem}
+.fl{font-size:.68rem;font-weight:700;color:var(--t3);margin-bottom:.18rem;display:flex;justify-content:space-between}
+.frange{width:100%;accent-color:var(--acc);height:4px;margin-bottom:.35rem}
+.fi{width:100%;padding:.32rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.76rem;outline:none}
+.fi:focus{border-color:rgba(249,115,22,.5)}
+.fsel{width:100%;padding:.32rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.76rem;outline:none;cursor:pointer;margin-bottom:.35rem}
+
+/* SHAPE GRID */
+.shape-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem;margin-bottom:.3rem}
+.shape-btn{padding:.38rem .25rem;background:var(--card);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:600;color:var(--t3);text-align:center;transition:all var(--tr)}
+.shape-btn:hover{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3);color:var(--t1)}
+
+/* MATERIAL TABS */
+.mtabs{display:flex;flex-wrap:wrap;gap:.2rem;margin-bottom:.35rem}
+.mtab{padding:.2rem .45rem;border-radius:5px;font-size:.62rem;font-weight:700;cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--t3);transition:all var(--tr)}
+.mtab:hover{color:var(--t2)}.mtab.active{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4);color:var(--acc-h)}
+
+/* OBJECTS LIST */
+.obj-list{display:flex;flex-direction:column;gap:.25rem;max-height:150px;overflow-y:auto}
+.obj-item{display:flex;align-items:center;gap:.4rem;padding:.3rem .45rem;background:var(--card);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:.7rem;color:var(--t2);transition:all var(--tr)}
+.obj-item:hover{background:rgba(249,115,22,.06)}
+.obj-item.selected{border-color:var(--acc);background:rgba(249,115,22,.1);color:var(--acc-h)}
+.obj-item .del-btn{margin-left:auto;color:var(--t4);cursor:pointer}.del-btn:hover{color:var(--red)}
+
+/* PARTICLE PRESETS */
+.preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:.25rem;margin-bottom:.35rem}
+.preset-btn{padding:.4rem .3rem;background:var(--card);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:.65rem;font-weight:600;color:var(--t3);text-align:center;transition:all var(--tr)}
+.preset-btn:hover,.preset-btn.active{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:var(--acc-h)}
+
+/* PHYSICS */
+.phys-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+
+/* DROPZONE */
+.dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;padding:2rem;border:2px dashed var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:all var(--tr);height:100%}
+.dropzone:hover,.dropzone.over{border-color:var(--acc);background:rgba(249,115,22,.04)}
+.drop-icon{font-size:2.5rem}
+.drop-title{font-size:.9rem;font-weight:700}
+.drop-sub{font-size:.75rem;color:var(--t3)}
+
+/* FPS COUNTER */
+.fps-badge{position:absolute;top:.5rem;right:.5rem;background:rgba(9,12,19,.8);border:1px solid var(--border);border-radius:6px;padding:.2rem .5rem;font-size:.68rem;font-weight:700;color:var(--acc-h);pointer-events:none;z-index:10}
+
+/* STATUS BAR */
+.statusbar{display:flex;align-items:center;gap:.75rem;padding:.22rem .75rem;background:var(--surf);border-top:1px solid var(--border);font-size:.67rem;color:var(--t3);flex-shrink:0;overflow-x:auto}
+.sb-sep{color:var(--t4)}
+
+/* FOOTER */
+.seo-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .75rem;padding:.35rem .75rem;border-top:1px solid var(--border);background:var(--surf);font-size:.65rem;color:var(--t3);flex-shrink:0}
+.seo-footer a{color:var(--t3);text-decoration:none}.seo-footer a:hover{color:var(--t2)}
+.sf-links{display:flex;flex-wrap:wrap;gap:.2rem .6rem}
+
+/* TOASTS */
+.toasts{position:fixed;bottom:2.5rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.4rem;pointer-events:none}
+.toast{padding:.5rem .85rem;border-radius:var(--r);font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--t1);box-shadow:0 6px 24px rgba(0,0,0,.5);animation:tin .2s ease}
+.toast.ok{border-color:rgba(16,185,129,.35);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.35);color:#f87171}.toast.info{border-color:rgba(249,115,22,.35);color:var(--acc-h)}
 @keyframes tin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:700px){.sb{display:none}}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.xr-msg{text-align:center;padding:2rem;color:var(--t3);font-size:.85rem;line-height:1.6}
+
+@media(max-width:800px){.sidebar,.right-panel{display:none}}
 </style>
 </head>
 <body>
-
-<header class="tb">
-  <a href="https://universeinvedors.tech/tools" class="logo">🎲 Universe Tools <span style="color:var(--t4);font-weight:400;font-size:.75rem">/</span> <span style="color:var(--acc-h)">3D Playground</span></a>
+<header class="topbar">
+  <a href="https://universeinvedors.tech/tools" class="logo">🧊 <span style="color:var(--acc-h)">3D Studio</span></a>
   <div class="etabs">
-    <button class="et active" onclick="setEngine('three',this)">Three.js</button>
-    <button class="et" onclick="setEngine('model',this)">Model Viewer</button>
+    <button class="et active" onclick="switchEngine('scene',this)">🏗 Scene Builder</button>
+    <button class="et" onclick="switchEngine('viewer',this)">📦 Model Viewer</button>
+    <button class="et" onclick="switchEngine('particles',this)">✨ Particle Lab</button>
+    <button class="et" onclick="switchEngine('physics',this)">⚙ Physics</button>
+    <button class="et" onclick="switchEngine('xr',this)">🥽 WebXR</button>
   </div>
   <div class="sp"></div>
   <div style="display:flex;gap:.35rem">
-    <button class="btn bg bsm" id="load-model-btn" onclick="document.getElementById('model-input').click()" style="display:none">📂 Load GLB</button>
-    <button class="btn bg bsm" onclick="addObject()">+ Object</button>
-    <button class="btn bg bsm" onclick="clearScene()">Clear</button>
-    <button class="btn bp" onclick="screenshot()">📷 Screenshot</button>
+    <button class="btn bg bsm" id="grid-toggle" onclick="toggleGrid()">⊞ Grid</button>
+    <button class="btn bg bsm" id="axis-toggle" onclick="toggleAxes()">⟳ Axes</button>
+    <button class="btn bg bsm" onclick="takeScreenshot()">📷 Screenshot</button>
   </div>
-  <input type="file" id="model-input" accept=".glb,.gltf" style="display:none" onchange="loadModel(this.files[0])">
 </header>
 
 <div class="main">
-  <aside class="sb">
-    <div class="sec" id="shape-sec">Shape</div>
-    <div class="sg" id="shape-grid">
-      <div class="sh active" onclick="setShape('box',this)" title="Box">⬛</div>
-      <div class="sh" onclick="setShape('sphere',this)" title="Sphere">⚫</div>
-      <div class="sh" onclick="setShape('cylinder',this)" title="Cylinder">🔵</div>
-      <div class="sh" onclick="setShape('torus',this)" title="Torus">◎</div>
-      <div class="sh" onclick="setShape('cone',this)" title="Cone">🔺</div>
-      <div class="sh" onclick="setShape('tetra',this)" title="Tetrahedron">◇</div>
-      <div class="sh" onclick="setShape('octa',this)" title="Octahedron">⬡</div>
-      <div class="sh" onclick="setShape('dodeca',this)" title="Dodecahedron">●</div>
-      <div class="sh" onclick="setShape('icosa',this)" title="Icosahedron">⊕</div>
-      <div class="sh" onclick="setShape('tknot',this)" title="Torus Knot">∞</div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar" id="left-sidebar">
+
+    <!-- SCENE BUILDER PANEL -->
+    <div id="panel-scene">
+      <div class="sec">Add Shape</div>
+      <div class="shape-grid">
+        <div class="shape-btn" onclick="addShape('box')">📦 Box</div>
+        <div class="shape-btn" onclick="addShape('sphere')">🔮 Sphere</div>
+        <div class="shape-btn" onclick="addShape('cylinder')">🥫 Cylinder</div>
+        <div class="shape-btn" onclick="addShape('torus')">🍩 Torus</div>
+        <div class="shape-btn" onclick="addShape('cone')">🔺 Cone</div>
+        <div class="shape-btn" onclick="addShape('tetrahedron')">△ Tetra</div>
+        <div class="shape-btn" onclick="addShape('octahedron')">◇ Octa</div>
+        <div class="shape-btn" onclick="addShape('torusknot')">∞ TKnot</div>
+        <div class="shape-btn" onclick="addShape('plane')">▬ Plane</div>
+        <div class="shape-btn" onclick="addRandomShape()">🎲 Random</div>
+      </div>
+
+      <div class="sec">Material</div>
+      <div class="mtabs">
+        <div class="mtab active" data-mat="standard" onclick="selectMat('standard',this)">Standard</div>
+        <div class="mtab" data-mat="wireframe" onclick="selectMat('wireframe',this)">Wire</div>
+        <div class="mtab" data-mat="normal" onclick="selectMat('normal',this)">Normal</div>
+        <div class="mtab" data-mat="phong" onclick="selectMat('phong',this)">Phong</div>
+        <div class="mtab" data-mat="physical" onclick="selectMat('physical',this)">PBR</div>
+      </div>
+      <label class="fl">Color</label>
+      <input type="color" id="mat-color" value="#f97316" style="width:100%;height:32px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem"/>
+      <div id="pbr-controls" style="display:none">
+        <label class="fl">Metalness <span id="v-metal">0.5</span></label>
+        <input type="range" class="frange" id="metalness" min="0" max="1" step="0.01" value="0.5" oninput="document.getElementById('v-metal').textContent=this.value"/>
+        <label class="fl">Roughness <span id="v-rough">0.5</span></label>
+        <input type="range" class="frange" id="roughness" min="0" max="1" step="0.01" value="0.5" oninput="document.getElementById('v-rough').textContent=this.value"/>
+      </div>
+
+      <div class="sec">Lighting</div>
+      <label class="fl">Ambient <span id="v-ambient">0.4</span></label>
+      <input type="range" class="frange" id="ambient-int" min="0" max="2" step="0.05" value="0.4" oninput="updateAmbient(this.value)"/>
+      <label class="fl">Light 1 Color</label>
+      <input type="color" id="light1-color" value="#ffffff" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem" oninput="updateLight(0,this.value)"/>
+      <label class="fl">Light 2 Color</label>
+      <input type="color" id="light2-color" value="#3b82f6" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem" oninput="updateLight(1,this.value)"/>
+      <label class="fl">Light 3 Color</label>
+      <input type="color" id="light3-color" value="#f97316" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem" oninput="updateLight(2,this.value)"/>
+
+      <div class="sec">Environment</div>
+      <label class="fl">Background</label>
+      <input type="color" id="bg-color" value="#090c13" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem" oninput="updateBgColor(this.value)"/>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem">
+        <input type="checkbox" id="fog-toggle" onchange="toggleFog(this.checked)"/>
+        <label for="fog-toggle" style="font-size:.72rem;cursor:pointer">Enable Fog</label>
+      </div>
+
+      <div class="sec">Objects (<span id="obj-count">0</span>)</div>
+      <div class="obj-list" id="obj-list"></div>
+      <button class="btn bg bsm" onclick="deleteSelected()" style="margin-top:.35rem;width:100%">🗑 Delete Selected</button>
+
+      <div class="sec">Transform</div>
+      <div class="grid-2">
+        <button class="btn bg bsm" id="t-move" onclick="setTransformMode('translate')" style="border-color:rgba(249,115,22,.5)">↔ Move</button>
+        <button class="btn bg bsm" id="t-rot" onclick="setTransformMode('rotate')">↻ Rotate</button>
+        <button class="btn bg bsm" id="t-scale" onclick="setTransformMode('scale')">⤡ Scale</button>
+      </div>
     </div>
-    <div class="sec">Material</div>
-    <button class="mb active" onclick="setMat('standard',this)">Standard</button>
-    <button class="mb" onclick="setMat('wireframe',this)">Wireframe</button>
-    <button class="mb" onclick="setMat('normal',this)">Normal Map</button>
-    <button class="mb" onclick="setMat('phong',this)">Phong</button>
-    <button class="mb" onclick="setMat('physical',this)">Physical (PBR)</button>
-    <div class="sec">Color</div>
-    <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem">
-      <input type="color" id="col" value="#f97316" oninput="setColor(this.value)" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);padding:.15rem;background:transparent;cursor:pointer">
-      <span id="col-hex" style="font-size:.75rem;color:var(--t2);font-family:monospace">#f97316</span>
+
+    <!-- VIEWER PANEL -->
+    <div id="panel-viewer" style="display:none">
+      <div class="sec">Model Viewer</div>
+      <button class="btn bp bsm" onclick="document.getElementById('gltf-input').click()" style="width:100%;margin-bottom:.5rem">📂 Load GLB/GLTF</button>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem">
+        <input type="checkbox" id="auto-rotate" checked onchange="updateViewerProps()"/>
+        <label for="auto-rotate" style="font-size:.72rem;cursor:pointer">Auto Rotate</label>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem">
+        <input type="checkbox" id="mv-shadow" checked onchange="updateViewerProps()"/>
+        <label for="mv-shadow" style="font-size:.72rem;cursor:pointer">Shadow</label>
+      </div>
+      <label class="fl">Exposure <span id="v-exposure">1.0</span></label>
+      <input type="range" class="frange" id="mv-exposure" min="0.1" max="5" step="0.1" value="1" oninput="document.getElementById('v-exposure').textContent=this.value;updateViewerProps()"/>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem">
+        <input type="checkbox" id="mv-wireframe" onchange="updateViewerProps()"/>
+        <label for="mv-wireframe" style="font-size:.72rem;cursor:pointer">Wireframe</label>
+      </div>
+      <div class="sec">Animations</div>
+      <div id="anim-list" style="font-size:.72rem;color:var(--t3)">No animations</div>
+      <div class="grid-2" style="margin-top:.35rem">
+        <button class="btn bg bsm" onclick="playAnim()">▶ Play</button>
+        <button class="btn bg bsm" onclick="pauseAnim()">⏸ Pause</button>
+      </div>
+      <label class="fl" style="margin-top:.35rem">Speed <span id="v-anim-speed">1.0x</span></label>
+      <input type="range" class="frange" id="anim-speed" min="0.1" max="4" step="0.1" value="1" oninput="document.getElementById('v-anim-speed').textContent=this.value+'x'"/>
     </div>
-    <div class="sec">Lighting</div>
-    <div class="sr"><div class="srh"><span class="srl">Ambient</span><span class="srv" id="v-amb">50%</span></div><input type="range" min="0" max="200" value="50" oninput="setAmbient(this.value)"></div>
-    <div class="sr"><div class="srh"><span class="srl">Point Light</span><span class="srv" id="v-pt">150%</span></div><input type="range" min="0" max="300" value="150" oninput="setPtLight(this.value)"></div>
-    <div class="sr"><div class="srh"><span class="srl">Scale</span><span class="srv" id="v-scale">1.0</span></div><input type="range" min="0.2" max="4" step="0.1" value="1" oninput="setScale(this.value)"></div>
-    <div class="sec">Scene</div>
-    <div class="sr"><div class="srh"><span class="srl">Background</span></div>
-    <input type="color" id="bg-col" value="#090c13" oninput="setBg(this.value)" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);padding:.15rem;background:transparent;cursor:pointer"></div>
-    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;margin-bottom:.4rem">
-      <input type="checkbox" id="show-grid" checked onchange="toggleGrid(this.checked)" style="accent-color:var(--acc)">
-      <span style="font-size:.78rem;color:var(--t2)">Grid</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;margin-bottom:.4rem">
-      <input type="checkbox" id="auto-rot" checked onchange="setAutoRot(this.checked)" style="accent-color:var(--acc)">
-      <span style="font-size:.78rem;color:var(--t2)">Auto-rotate</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer">
-      <input type="checkbox" id="shadows" checked onchange="toggleShadows(this.checked)" style="accent-color:var(--acc)">
-      <span style="font-size:.78rem;color:var(--t2)">Shadows</span>
-    </label>
+
+    <!-- PARTICLES PANEL -->
+    <div id="panel-particles" style="display:none">
+      <div class="sec">Preset Systems</div>
+      <div class="preset-grid">
+        <div class="preset-btn active" onclick="loadParticlePreset('galaxy',this)">🌌 Galaxy</div>
+        <div class="preset-btn" onclick="loadParticlePreset('snow',this)">❄ Snow</div>
+        <div class="preset-btn" onclick="loadParticlePreset('fire',this)">🔥 Fire</div>
+        <div class="preset-btn" onclick="loadParticlePreset('explosion',this)">💥 Explosion</div>
+        <div class="preset-btn" onclick="loadParticlePreset('matrix',this)">🟩 Matrix</div>
+        <div class="preset-btn" onclick="loadParticlePreset('dna',this)">🧬 DNA Helix</div>
+      </div>
+      <div class="sec">Controls</div>
+      <label class="fl">Count <span id="v-pcount">10000</span></label>
+      <input type="range" class="frange" id="p-count" min="1000" max="50000" step="1000" value="10000" oninput="document.getElementById('v-pcount').textContent=parseInt(this.value).toLocaleString();rebuildParticles()"/>
+      <label class="fl">Speed <span id="v-pspeed">1.0</span></label>
+      <input type="range" class="frange" id="p-speed" min="0.1" max="5" step="0.1" value="1" oninput="document.getElementById('v-pspeed').textContent=this.value"/>
+      <label class="fl">Size <span id="v-psize">2.0</span></label>
+      <input type="range" class="frange" id="p-size" min="0.5" max="10" step="0.5" value="2" oninput="document.getElementById('v-psize').textContent=this.value;rebuildParticles()"/>
+      <label class="fl">Spread <span id="v-pspread">5.0</span></label>
+      <input type="range" class="frange" id="p-spread" min="1" max="20" step="0.5" value="5" oninput="document.getElementById('v-pspread').textContent=this.value;rebuildParticles()"/>
+      <label class="fl">Color</label>
+      <input type="color" id="p-color" value="#f97316" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer" oninput="rebuildParticles()"/>
+    </div>
+
+    <!-- PHYSICS PANEL -->
+    <div id="panel-physics" style="display:none">
+      <div class="sec">Physics Demo</div>
+      <div class="phys-grid">
+        <button class="btn bg bsm" onclick="physDemo('stack')">📦 Box Stack</button>
+        <button class="btn bg bsm" onclick="physDemo('rain')">🌧 Sphere Rain</button>
+        <button class="btn bg bsm" onclick="physDemo('domino')">🀱 Dominoes</button>
+        <button class="btn bg bsm" onclick="clearPhysics()">🗑 Clear</button>
+      </div>
+      <div style="margin-top:.5rem;font-size:.72rem;color:var(--t3)">Click on the scene to drop a sphere</div>
+      <label class="fl" style="margin-top:.5rem">Gravity <span id="v-gravity">-9.8</span></label>
+      <input type="range" class="frange" id="gravity" min="-20" max="0" step="0.5" value="-9.8" oninput="document.getElementById('v-gravity').textContent=this.value;updateGravity(this.value)"/>
+      <div style="display:flex;align-items:center;gap:.5rem;margin-top:.35rem">
+        <input type="checkbox" id="phys-debug" onchange="togglePhysicsDebug(this.checked)"/>
+        <label for="phys-debug" style="font-size:.72rem;cursor:pointer">Debug Wireframes</label>
+      </div>
+    </div>
+
+    <!-- WEBXR PANEL -->
+    <div id="panel-xr" style="display:none">
+      <div class="sec">WebXR</div>
+      <div id="xr-support-info" style="font-size:.75rem;color:var(--t3);margin-bottom:.5rem">Checking WebXR support...</div>
+      <button class="btn bp bsm" id="btn-enter-ar" onclick="enterXR('ar')" style="width:100%;margin-bottom:.35rem;display:none">📱 Enter AR</button>
+      <button class="btn bg bsm" id="btn-enter-vr" onclick="enterXR('vr')" style="width:100%;margin-bottom:.35rem;display:none">🥽 Enter VR</button>
+    </div>
   </aside>
 
-  <!-- Three.js canvas -->
-  <div class="cv-wrap" id="cv-wrap">
-    <div class="loading-overlay" id="loading">
-      <div class="spinner"></div>
-      <p style="font-size:.85rem;color:var(--t3)">Loading Three.js…</p>
+  <!-- 3D VIEWPORT -->
+  <div class="canvas-wrap" id="canvas-wrap">
+    <canvas id="three-canvas"></canvas>
+    <div class="fps-badge" id="fps-badge">0 FPS</div>
+    <!-- Model viewer drop area -->
+    <div id="viewer-wrap" style="display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center">
+      <div class="dropzone" id="viewer-dropzone" style="max-width:400px"
+           ondrop="handleModelDrop(event)" ondragover="e=>{e.preventDefault();this.classList.add('over')}" ondragleave="this.classList.remove('over')">
+        <div class="drop-icon">📦</div>
+        <div class="drop-title">Drop a GLB/GLTF model here</div>
+        <div class="drop-sub">Or use the Load button in the sidebar</div>
+      </div>
+      <model-viewer id="model-viewer-el" style="display:none;width:100%;height:100%" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
     </div>
-    <canvas id="c"></canvas>
-    <div class="overlay">
-      <span class="ov-badge">Drag orbit</span>
-      <span class="ov-badge">Scroll zoom</span>
-      <span class="ov-badge" id="fps-badge">—fps</span>
+    <!-- XR placeholder -->
+    <div id="xr-wrap" style="display:none;width:100%;height:100%;align-items:center;justify-content:center">
+      <div class="xr-msg">
+        <div style="font-size:2rem;margin-bottom:.75rem">🥽</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--t1);margin-bottom:.5rem">WebXR Experience</div>
+        <div id="xr-detail">Use the sidebar to check device support and enter AR/VR mode.</div>
+      </div>
     </div>
   </div>
 
-  <!-- model-viewer wrapper -->
-  <div id="mv-wrap">
-    <div id="mv-drop" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px dashed var(--border);border-radius:14px;margin:1rem;flex-direction:column;gap:.75rem;background:var(--surf)"
-      onclick="document.getElementById('model-input').click()"
-      ondragover="event.preventDefault()"
-      ondrop="event.preventDefault();loadModel(event.dataTransfer.files[0])">
-      <div style="font-size:3rem">🎮</div>
-      <p style="font-size:.9rem;font-weight:700">Drop a GLB or GLTF file here</p>
-      <p style="font-size:.8rem;color:var(--t2)">Load your 3D model for inspection</p>
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel">
+    <div class="sec">Selected Object</div>
+    <div id="props-none" style="font-size:.72rem;color:var(--t3);padding:.3rem 0">Nothing selected</div>
+    <div id="props-panel" style="display:none">
+      <div class="sec">Position</div>
+      <div class="grid-2">
+        <div><label class="fl" style="font-size:.62rem">X</label><input class="fi" type="number" id="prop-px" step="0.1" oninput="updateProp('px',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Y</label><input class="fi" type="number" id="prop-py" step="0.1" oninput="updateProp('py',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Z</label><input class="fi" type="number" id="prop-pz" step="0.1" oninput="updateProp('pz',this.value)"/></div>
+      </div>
+      <div class="sec">Rotation (deg)</div>
+      <div class="grid-2">
+        <div><label class="fl" style="font-size:.62rem">X</label><input class="fi" type="number" id="prop-rx" step="5" oninput="updateProp('rx',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Y</label><input class="fi" type="number" id="prop-ry" step="5" oninput="updateProp('ry',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Z</label><input class="fi" type="number" id="prop-rz" step="5" oninput="updateProp('rz',this.value)"/></div>
+      </div>
+      <div class="sec">Scale</div>
+      <div class="grid-2">
+        <div><label class="fl" style="font-size:.62rem">X</label><input class="fi" type="number" id="prop-sx" step="0.1" min="0.01" oninput="updateProp('sx',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Y</label><input class="fi" type="number" id="prop-sy" step="0.1" min="0.01" oninput="updateProp('sy',this.value)"/></div>
+        <div><label class="fl" style="font-size:.62rem">Z</label><input class="fi" type="number" id="prop-sz" step="0.1" min="0.01" oninput="updateProp('sz',this.value)"/></div>
+      </div>
+      <div class="sec">Material</div>
+      <label class="fl">Color</label>
+      <input type="color" id="prop-color" style="width:100%;height:28px;border:1px solid var(--border);border-radius:var(--r);background:var(--inp);cursor:pointer;margin-bottom:.35rem" oninput="updatePropColor(this.value)"/>
     </div>
-    <model-viewer id="mv" style="width:100%;height:100%;display:none" camera-controls auto-rotate shadow-intensity="1" exposure="0.8"></model-viewer>
-  </div>
+    <div class="sec" style="margin-top:.5rem">Camera</div>
+    <div id="cam-pos" style="font-size:.68rem;color:var(--t3)">—</div>
+  </aside>
 </div>
 
+<!-- STATUS BAR -->
 <div class="statusbar">
-  <span class="sdot"></span>
-  <span id="status-engine" style="color:var(--acc-h);font-weight:600">Three.js</span>
-  <span id="status-info" style="color:var(--t3)">box · standard</span>
-  <span style="margin-left:auto;font-size:.65rem;color:var(--t4)">Drag to orbit · Scroll to zoom · Touch supported</span>
+  <span id="sb-engine">Three.js r169</span>
+  <span class="sb-sep">·</span>
+  <span id="sb-fps">0 FPS</span>
+  <span class="sb-sep">·</span>
+  <span id="sb-objects">0 objects</span>
+  <span class="sb-sep">·</span>
+  <span id="sb-mode">Scene Builder</span>
+  <div class="sp"></div>
+  <span id="sb-cam">Cam: 0,0,0</span>
 </div>
 
+<!-- FOOTER -->
 <footer class="seo-footer">
-  <div class="sfl">
+  <div class="sf-links">
     <a href="https://universeinvedors.tech">Universe Invedors</a>
     <a href="https://universeinvedors.tech/tools">All Tools</a>
-    <a href="https://code.universeinvedors.tech">Code</a>
+    <a href="https://code.universeinvedors.tech">Code IDE</a>
     <a href="https://diagram.universeinvedors.tech">Diagrams</a>
     <a href="https://chart.universeinvedors.tech">Charts</a>
     <a href="https://ocr.universeinvedors.tech">OCR</a>
-    <a href="https://pdf.universeinvedors.tech">PDF</a>
-    <a href="https://map.universeinvedors.tech">Maps</a>
-    <a href="https://media.universeinvedors.tech">Media</a>
+    <a href="https://pdf.universeinvedors.tech">PDF Suite</a>
+    <a href="https://image.universeinvedors.tech">Image Studio</a>
+    <a href="https://map.universeinvedors.tech">Map Studio</a>
+    <a href="https://media.universeinvedors.tech">Media Studio</a>
   </div>
-  <span>© 2024 Universe Invedors · Three.js · model-viewer · Free 3D tool</span>
+  <span>© 2024 Universe Invedors · 3D Studio · Three.js · WebXR</span>
 </footer>
 
 <div class="toasts" id="toasts"></div>
+<input type="file" id="gltf-input" accept=".glb,.gltf" style="display:none" onchange="loadModelFile(this.files[0]);this.value=''"/>
 
-<!-- model-viewer web component -->
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<!-- Load model-viewer web component for the Viewer tab -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169/examples/jsm/"
+  }
+}
+</script>
 
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169/build/three.module.js'
-import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.169/examples/jsm/controls/OrbitControls.js'
-import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.169/examples/jsm/loaders/GLTFLoader.js'
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import CANNON from 'https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js';
 
-// Scene setup
-const canvas=document.getElementById('c')
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})
-renderer.setPixelRatio(Math.min(devicePixelRatio,2))
-renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap
+// ── SCENE SETUP ────────────────────────────────────
+const canvas = document.getElementById('three-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-const scene=new THREE.Scene()
-scene.background=new THREE.Color('#090c13')
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#090c13');
 
-const camera=new THREE.PerspectiveCamera(60,1,.1,1000)
-camera.position.set(0,1.5,4)
+const camera = new THREE.PerspectiveCamera(60, 1, 0.01, 1000);
+camera.position.set(5, 5, 10);
 
-const controls=new OrbitControls(camera,canvas)
-controls.enableDamping=true; controls.dampingFactor=.05; controls.autoRotate=true; controls.autoRotateSpeed=1.2
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+// Grid and Axes
+const gridHelper = new THREE.GridHelper(20, 20, 0x334155, 0x1e293b);
+scene.add(gridHelper);
+const axesHelper = new THREE.AxesHelper(3);
+scene.add(axesHelper);
 
 // Lights
-const ambient=new THREE.AmbientLight(0xffffff,.5); scene.add(ambient)
-const dirLight=new THREE.DirectionalLight(0xffffff,1.5); dirLight.position.set(5,8,5); dirLight.castShadow=true; scene.add(dirLight)
-const ptLight=new THREE.PointLight(0xf97316,1.5,20); ptLight.position.set(-4,4,3); scene.add(ptLight)
-const blueLight=new THREE.PointLight(0x3b82f6,.8,15); blueLight.position.set(4,-2,-4); scene.add(blueLight)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+scene.add(ambientLight);
+const lights = [
+  new THREE.PointLight(0xffffff, 1.5, 50),
+  new THREE.PointLight(0x3b82f6, 1.0, 50),
+  new THREE.PointLight(0xf97316, 1.0, 50)
+];
+lights[0].position.set(5,8,5);
+lights[1].position.set(-8,4,-5);
+lights[2].position.set(3,-3,8);
+lights.forEach(l => { l.castShadow = true; scene.add(l); });
 
-// Grid
-const grid=new THREE.GridHelper(20,30,0x1e2535,0x1e2535); scene.add(grid)
+// Ground
+const groundGeo = new THREE.PlaneGeometry(30,30);
+const groundMat = new THREE.ShadowMaterial({ opacity: 0.3 });
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.rotation.x = -Math.PI/2;
+ground.receiveShadow = true;
+scene.add(ground);
 
-// Shadow receiver
-const ground=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.ShadowMaterial({opacity:.15,transparent:true}))
-ground.rotation.x=-Math.PI/2; ground.position.y=-1.6; ground.receiveShadow=true; scene.add(ground)
+// ── OBJECTS LIST ────────────────────────────────────
+const objects = [];
+let selectedObj = null;
+let currentMatType = 'standard';
+let transformMode = 'translate';
+let gridVisible = true, axesVisible = true;
+let particleSystem = null;
+let currentPreset = 'galaxy';
+let physicsWorld = null;
+let physBodies = [];
+let physicsMeshes = [];
+let physicsActive = false;
+let physDebug = false;
 
-// State
-let mesh=null, shape='box', mat='standard', color='#f97316', autoRot=true, objects=[], frameCount=0, lastTime=performance.now()
-
-function buildMesh(s,m,c){
-  const geos={box:new THREE.BoxGeometry(1.6,1.6,1.6),sphere:new THREE.SphereGeometry(1,32,32),cylinder:new THREE.CylinderGeometry(.8,.8,1.8,32),torus:new THREE.TorusGeometry(.9,.35,16,100),cone:new THREE.ConeGeometry(.9,1.8,32),tetra:new THREE.TetrahedronGeometry(1.2),octa:new THREE.OctahedronGeometry(1.2),dodeca:new THREE.DodecahedronGeometry(1),icosa:new THREE.IcosahedronGeometry(1.2),tknot:new THREE.TorusKnotGeometry(.8,.25,100,16)}
-  const mats={standard:new THREE.MeshStandardMaterial({color:c,metalness:.2,roughness:.5}),wireframe:new THREE.MeshBasicMaterial({color:c,wireframe:true}),normal:new THREE.MeshNormalMaterial(),phong:new THREE.MeshPhongMaterial({color:c,shininess:80}),physical:new THREE.MeshPhysicalMaterial({color:c,metalness:.8,roughness:.1,clearcoat:1,clearcoatRoughness:.05})}
-  const obj=new THREE.Mesh(geos[s]||geos.box,mats[m]||mats.standard)
-  obj.castShadow=true; obj.receiveShadow=true
-  return obj
+// ── RESIZE ────────────────────────────────────────
+function onResize() {
+  const wrap = document.getElementById('canvas-wrap');
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
 }
+new ResizeObserver(onResize).observe(document.getElementById('canvas-wrap'));
+onResize();
 
-function rebuild(){ if(mesh){scene.remove(mesh);mesh=null}; mesh=buildMesh(shape,mat,color); scene.add(mesh); document.getElementById('status-info').textContent=`${shape} · ${mat}` }
-rebuild()
+// ── FPS TRACKING ────────────────────────────────────
+let frameCount = 0, lastFpsTime = performance.now(), fps = 0;
 
-window.setShape=(s,el)=>{shape=s;document.querySelectorAll('.sh').forEach(b=>b.classList.remove('active'));el.classList.add('active');rebuild()}
-window.setMat=(m,el)=>{mat=m;document.querySelectorAll('.mb').forEach(b=>b.classList.remove('active'));el.classList.add('active');rebuild()}
-window.setColor=(c)=>{color=c;document.getElementById('col-hex').textContent=c;rebuild()}
-window.setAmbient=v=>{ambient.intensity=v/100;document.getElementById('v-amb').textContent=Math.round(v)+'%'}
-window.setPtLight=v=>{ptLight.intensity=v/100;document.getElementById('v-pt').textContent=Math.round(v)+'%'}
-window.setScale=v=>{if(mesh)mesh.scale.setScalar(parseFloat(v));document.getElementById('v-scale').textContent=parseFloat(v).toFixed(1)}
-window.setBg=v=>{scene.background=new THREE.Color(v)}
-window.toggleGrid=v=>{grid.visible=v}
-window.setAutoRot=v=>{controls.autoRotate=v}
-window.toggleShadows=v=>{renderer.shadowMap.enabled=v;dirLight.castShadow=v}
-window.addObject=()=>{
-  const shapes=['box','sphere','cylinder','torus','cone','tetra']
-  const s=shapes[Math.floor(Math.random()*shapes.length)]
-  const colors=['#3b82f6','#8b5cf6','#10b981','#f97316','#ec4899','#06b6d4']
-  const c=colors[Math.floor(Math.random()*colors.length)]
-  const obj=buildMesh(s,'standard',c)
-  obj.position.set((Math.random()-.5)*6,(Math.random()-.5)*3,(Math.random()-.5)*4)
-  scene.add(obj); objects.push(obj); toast(`Added ${s}`,'ok')
-}
-window.clearScene=()=>{ objects.forEach(o=>scene.remove(o)); objects=[]; toast('Scene cleared','ok') }
-window.screenshot=()=>{ renderer.render(scene,camera); const a=document.createElement('a'); a.download='3d-scene.png'; a.href=canvas.toDataURL(); a.click(); toast('Screenshot saved','ok') }
+// ── RAYCASTER ────────────────────────────────────
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+canvas.addEventListener('click', e => {
+  if(currentEngine !== 'scene' && currentEngine !== 'physics') return;
+  const r = canvas.getBoundingClientRect();
+  mouse.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+  mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  if(currentEngine === 'physics') {
+    dropPhysicsSphere(raycaster.ray);
+    return;
+  }
+  const hits = raycaster.intersectObjects(objects.map(o=>o.mesh));
+  if(hits.length > 0) {
+    const obj = objects.find(o => o.mesh === hits[0].object);
+    if(obj) selectObject(obj);
+  } else {
+    deselectObject();
+  }
+});
 
-// GLTF loading
-const loader=new GLTFLoader()
-window.loadModel=(file)=>{
-  if(!file) return
-  const url=URL.createObjectURL(file)
-  loader.load(url,gltf=>{
-    if(mesh){scene.remove(mesh);mesh=null}
-    objects.forEach(o=>scene.remove(o)); objects=[]
-    const model=gltf.scene
-    const box=new THREE.Box3().setFromObject(model)
-    const s=2/box.getSize(new THREE.Vector3()).length()
-    model.scale.setScalar(s)
-    box.setFromObject(model)
-    const c=box.getCenter(new THREE.Vector3())
-    model.position.sub(c)
-    model.castShadow=true; model.receiveShadow=true
-    scene.add(model); mesh=model
-    toast('Model loaded: '+file.name,'ok')
-  },undefined,err=>toast('Load failed: '+err.message.slice(0,60),'err'))
-}
-
-// Engine switch
-window.setEngine=(eng,btn)=>{
-  document.querySelectorAll('.et').forEach(t=>t.classList.remove('active')); btn.classList.add('active')
-  document.getElementById('cv-wrap').style.display=eng==='three'?'flex':'none'
-  document.getElementById('mv-wrap').style.display=eng==='model'?'flex':'none'
-  document.getElementById('load-model-btn').style.display=eng==='model'?'flex':'none'
-  document.getElementById('status-engine').textContent=eng==='three'?'Three.js':'model-viewer'
-  if(eng==='model'){
-    const mv=document.getElementById('mv')
-    document.getElementById('model-input').onchange=e=>{
-      const f=e.target.files[0]; if(!f) return
-      mv.src=URL.createObjectURL(f)
-      mv.style.display='block'
-      document.getElementById('mv-drop').style.display='none'
-      toast('Model loaded in viewer','ok')
+// ── MAIN LOOP ────────────────────────────────────
+let currentEngine = 'scene';
+function animate() {
+  requestAnimationFrame(animate);
+  const now = performance.now();
+  frameCount++;
+  if(now - lastFpsTime > 500) {
+    fps = Math.round(frameCount / ((now - lastFpsTime) / 1000));
+    frameCount = 0; lastFpsTime = now;
+    document.getElementById('fps-badge').textContent = fps + ' FPS';
+    document.getElementById('sb-fps').textContent = fps + ' FPS';
+  }
+  controls.update();
+  // Particle animation
+  if(particleSystem && currentEngine === 'particles') {
+    animateParticles();
+  }
+  // Physics step
+  if(physicsActive && physicsWorld) {
+    physicsWorld.step(1/60);
+    for(let i=0;i<physBodies.length;i++) {
+      physicsMeshes[i].position.copy(physBodies[i].position);
+      physicsMeshes[i].quaternion.copy(physBodies[i].quaternion);
     }
   }
+  if(selectedObj) updatePropsDisplay();
+  // Camera pos
+  const cp = camera.position;
+  document.getElementById('sb-cam').textContent = `Cam: ${cp.x.toFixed(1)},${cp.y.toFixed(1)},${cp.z.toFixed(1)}`;
+  renderer.render(scene, camera);
 }
+animate();
 
-// Resize
-const ro=new ResizeObserver(()=>{
-  const w=canvas.parentElement.clientWidth, h=canvas.parentElement.clientHeight
-  renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix()
-})
-ro.observe(canvas.parentElement)
+// ── ENGINE SWITCH ────────────────────────────────────
+window.switchEngine = function(engine, btn) {
+  currentEngine = engine;
+  document.querySelectorAll('.et').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Show/hide panels
+  ['scene','viewer','particles','physics','xr'].forEach(e => {
+    const p = document.getElementById('panel-'+e);
+    if(p) p.style.display = e===engine ? 'block' : 'none';
+    const topBtns = document.querySelectorAll('#grid-toggle,#axis-toggle');
+    topBtns.forEach(b => b.style.display = (engine==='scene'||engine==='particles'||engine==='physics') ? 'inline-flex' : 'none');
+  });
+  const cw = document.getElementById('canvas-wrap');
+  const vw = document.getElementById('viewer-wrap');
+  const xw = document.getElementById('xr-wrap');
+  if(engine === 'viewer') {
+    canvas.style.display = 'none';
+    vw.style.display = 'flex';
+    xw.style.display = 'none';
+  } else if(engine === 'xr') {
+    canvas.style.display = 'none';
+    vw.style.display = 'none';
+    xw.style.display = 'flex';
+    checkXRSupport();
+  } else {
+    canvas.style.display = 'block';
+    vw.style.display = 'none';
+    xw.style.display = 'none';
+    if(engine === 'particles') {
+      loadParticlePreset(currentPreset, document.querySelector(`.preset-btn[onclick*="${currentPreset}"]`));
+    }
+    if(engine === 'physics') initPhysics();
+  }
+  document.getElementById('sb-mode').textContent = {scene:'Scene Builder',viewer:'Model Viewer',particles:'Particle Lab',physics:'Physics',xr:'WebXR'}[engine];
+};
 
-document.getElementById('loading').style.display='none'
+// ── SCENE BUILDER ────────────────────────────────────
+window.addShape = function(type) {
+  let geo;
+  switch(type) {
+    case 'box': geo = new THREE.BoxGeometry(1,1,1); break;
+    case 'sphere': geo = new THREE.SphereGeometry(0.6,32,32); break;
+    case 'cylinder': geo = new THREE.CylinderGeometry(0.5,0.5,1.5,32); break;
+    case 'torus': geo = new THREE.TorusGeometry(0.7,0.25,16,48); break;
+    case 'cone': geo = new THREE.ConeGeometry(0.6,1.5,32); break;
+    case 'tetrahedron': geo = new THREE.TetrahedronGeometry(0.8); break;
+    case 'octahedron': geo = new THREE.OctahedronGeometry(0.7); break;
+    case 'torusknot': geo = new THREE.TorusKnotGeometry(0.5,0.18,128,16); break;
+    case 'plane': geo = new THREE.PlaneGeometry(2,2); break;
+    default: geo = new THREE.BoxGeometry(1,1,1);
+  }
+  const color = document.getElementById('mat-color').value;
+  const mat = createMaterial(currentMatType, color);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.castShadow = true; mesh.receiveShadow = true;
+  mesh.position.set((Math.random()-0.5)*4, 0.5 + Math.random()*2, (Math.random()-0.5)*4);
+  scene.add(mesh);
+  const obj = { mesh, name: type + '_' + (objects.length+1), type };
+  objects.push(obj);
+  renderObjList();
+  selectObject(obj);
+  toast(type + ' added','ok');
+};
 
-// Animate
-function animate(){
-  requestAnimationFrame(animate)
-  controls.update()
-  renderer.render(scene,camera)
-  frameCount++
-  const now=performance.now()
-  if(now-lastTime>=1000){
-    document.getElementById('fps-badge').textContent=Math.round(frameCount*1000/(now-lastTime))+'fps'
-    frameCount=0; lastTime=now
+window.addRandomShape = function() {
+  const shapes = ['box','sphere','cylinder','torus','cone','tetrahedron','octahedron','torusknot'];
+  window.addShape(shapes[Math.floor(Math.random()*shapes.length)]);
+};
+
+function createMaterial(type, color) {
+  const c = new THREE.Color(color);
+  switch(type) {
+    case 'standard': return new THREE.MeshStandardMaterial({ color: c });
+    case 'wireframe': return new THREE.MeshBasicMaterial({ color: c, wireframe: true });
+    case 'normal': return new THREE.MeshNormalMaterial();
+    case 'phong': return new THREE.MeshPhongMaterial({ color: c });
+    case 'physical': return new THREE.MeshPhysicalMaterial({
+      color: c,
+      metalness: parseFloat(document.getElementById('metalness').value),
+      roughness: parseFloat(document.getElementById('roughness').value)
+    });
+    default: return new THREE.MeshStandardMaterial({ color: c });
   }
 }
-animate()
 
-window.toast=(msg,type='')=>{
-  const el=document.createElement('div'); el.className='toast'+(type?' '+type:''); el.textContent=msg
-  document.getElementById('toasts').appendChild(el); setTimeout(()=>el.remove(),2800)
+window.selectMat = function(type, btn) {
+  currentMatType = type;
+  document.querySelectorAll('.mtab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pbr-controls').style.display = type === 'physical' ? 'block' : 'none';
+};
+
+window.setTransformMode = function(mode) {
+  transformMode = mode;
+  ['translate','rotate','scale'].forEach(m => {
+    const btn = document.getElementById('t-' + (m==='translate'?'move':m==='rotate'?'rot':'scale'));
+    if(btn) btn.style.borderColor = m===mode ? 'rgba(249,115,22,.7)' : 'rgba(255,255,255,.07)';
+  });
+  toast('Transform: ' + mode,'info');
+};
+
+function renderObjList() {
+  const list = document.getElementById('obj-list');
+  list.innerHTML = '';
+  objects.forEach((obj,i) => {
+    const item = document.createElement('div');
+    item.className = 'obj-item' + (obj === selectedObj ? ' selected' : '');
+    item.innerHTML = `<span>📦</span><span style="flex:1">${obj.name}</span><span class="del-btn" onclick="event.stopPropagation();removeObject(${i})">✕</span>`;
+    item.onclick = () => selectObject(obj);
+    list.appendChild(item);
+  });
+  document.getElementById('obj-count').textContent = objects.length;
+  document.getElementById('sb-objects').textContent = objects.length + ' objects';
 }
+
+window.removeObject = function(i) {
+  scene.remove(objects[i].mesh);
+  if(objects[i] === selectedObj) deselectObject();
+  objects.splice(i, 1);
+  renderObjList();
+};
+
+window.deleteSelected = function() {
+  if(!selectedObj) { toast('Select an object first','err'); return; }
+  const i = objects.indexOf(selectedObj);
+  if(i >= 0) window.removeObject(i);
+};
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Delete' && selectedObj && currentEngine === 'scene') window.deleteSelected();
+});
+
+function selectObject(obj) {
+  selectedObj = obj;
+  renderObjList();
+  document.getElementById('props-none').style.display = 'none';
+  document.getElementById('props-panel').style.display = 'block';
+  updatePropsDisplay();
+  // Highlight
+  objects.forEach(o => {
+    if(o.mesh.material.emissive) o.mesh.material.emissive.set(0x000000);
+  });
+  if(obj.mesh.material.emissive) obj.mesh.material.emissive.set(0x331100);
+}
+
+function deselectObject() {
+  if(selectedObj && selectedObj.mesh.material.emissive) selectedObj.mesh.material.emissive.set(0x000000);
+  selectedObj = null;
+  renderObjList();
+  document.getElementById('props-none').style.display = 'block';
+  document.getElementById('props-panel').style.display = 'none';
+}
+
+function updatePropsDisplay() {
+  if(!selectedObj) return;
+  const m = selectedObj.mesh;
+  const set = (id, val) => { const el = document.getElementById(id); if(el && document.activeElement !== el) el.value = val.toFixed(2); };
+  set('prop-px',m.position.x); set('prop-py',m.position.y); set('prop-pz',m.position.z);
+  set('prop-rx',m.rotation.x*(180/Math.PI)); set('prop-ry',m.rotation.y*(180/Math.PI)); set('prop-rz',m.rotation.z*(180/Math.PI));
+  set('prop-sx',m.scale.x); set('prop-sy',m.scale.y); set('prop-sz',m.scale.z);
+  const cam = camera.position;
+  document.getElementById('cam-pos').textContent = `${cam.x.toFixed(1)}, ${cam.y.toFixed(1)}, ${cam.z.toFixed(1)}`;
+}
+
+window.updateProp = function(prop, val) {
+  if(!selectedObj) return;
+  const m = selectedObj.mesh;
+  const n = parseFloat(val);
+  if(isNaN(n)) return;
+  switch(prop) {
+    case 'px': m.position.x=n; break; case 'py': m.position.y=n; break; case 'pz': m.position.z=n; break;
+    case 'rx': m.rotation.x=n*(Math.PI/180); break; case 'ry': m.rotation.y=n*(Math.PI/180); break; case 'rz': m.rotation.z=n*(Math.PI/180); break;
+    case 'sx': m.scale.x=n; break; case 'sy': m.scale.y=n; break; case 'sz': m.scale.z=n; break;
+  }
+};
+
+window.updatePropColor = function(hex) {
+  if(!selectedObj) return;
+  selectedObj.mesh.material.color?.set(hex);
+};
+
+window.toggleGrid = function() {
+  gridVisible = !gridVisible;
+  gridHelper.visible = gridVisible;
+};
+
+window.toggleAxes = function() {
+  axesVisible = !axesVisible;
+  axesHelper.visible = axesVisible;
+};
+
+window.updateAmbient = function(v) {
+  document.getElementById('v-ambient').textContent = parseFloat(v).toFixed(1);
+  ambientLight.intensity = parseFloat(v);
+};
+
+window.updateLight = function(i, hex) {
+  lights[i].color.set(hex);
+};
+
+window.updateBgColor = function(hex) {
+  scene.background = new THREE.Color(hex);
+};
+
+window.toggleFog = function(on) {
+  scene.fog = on ? new THREE.FogExp2(0x090c13, 0.03) : null;
+};
+
+window.takeScreenshot = function() {
+  renderer.render(scene, camera);
+  const url = canvas.toDataURL('image/png');
+  const a = document.createElement('a'); a.href=url; a.download='3d-studio.png'; a.click();
+  toast('Screenshot saved!','ok');
+};
+
+// ── MODEL VIEWER ────────────────────────────────────
+let modelViewerEl = null;
+
+window.loadModelFile = function(file) {
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  modelViewerEl = document.getElementById('model-viewer-el');
+  document.getElementById('viewer-dropzone').style.display = 'none';
+  modelViewerEl.style.display = 'block';
+  modelViewerEl.src = url;
+  modelViewerEl.alt = file.name;
+  toast(file.name + ' loaded','ok');
+  updateViewerProps();
+  // Check animations after load
+  modelViewerEl.addEventListener('load', () => {
+    const anims = modelViewerEl.availableAnimations;
+    const list = document.getElementById('anim-list');
+    if(anims && anims.length > 0) {
+      list.innerHTML = anims.map((a,i)=>`<div style="padding:.2rem 0;font-size:.72rem;cursor:pointer;color:var(--t2)" onclick="playAnimByName('${a}')">${i+1}. ${a}</div>`).join('');
+    } else {
+      list.innerHTML = '<div style="font-size:.72rem;color:var(--t3)">No animations</div>';
+    }
+  }, {once:true});
+};
+
+window.handleModelDrop = function(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('over');
+  const file = e.dataTransfer.files[0];
+  if(file) window.loadModelFile(file);
+};
+
+window.updateViewerProps = function() {
+  const mv = document.getElementById('model-viewer-el');
+  mv.setAttribute('auto-rotate', document.getElementById('auto-rotate').checked ? '' : null);
+  mv.shadowIntensity = document.getElementById('mv-shadow').checked ? 1 : 0;
+  mv.exposure = parseFloat(document.getElementById('mv-exposure').value);
+};
+
+window.playAnim = function() { const mv = document.getElementById('model-viewer-el'); if(mv.availableAnimations?.length) { mv.animationName = mv.availableAnimations[0]; mv.play(); } };
+window.pauseAnim = function() { document.getElementById('model-viewer-el').pause(); };
+window.playAnimByName = function(name) { const mv = document.getElementById('model-viewer-el'); mv.animationName=name; mv.play(); };
+
+// ── PARTICLES ────────────────────────────────────
+const particleState = { preset:'galaxy', time:0 };
+let particlePositions = null;
+
+window.loadParticlePreset = function(preset, btn) {
+  currentPreset = preset;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  rebuildParticles();
+};
+
+window.rebuildParticles = function() {
+  if(particleSystem) { scene.remove(particleSystem); particleSystem.geometry.dispose(); particleSystem.material.dispose(); particleSystem = null; }
+  const count = parseInt(document.getElementById('p-count').value);
+  const spread = parseFloat(document.getElementById('p-spread').value);
+  const size = parseFloat(document.getElementById('p-size').value);
+  const color = document.getElementById('p-color').value;
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  const colors = new Float32Array(count * 3);
+  const c = new THREE.Color(color);
+  for(let i=0;i<count;i++) {
+    const i3 = i*3;
+    switch(currentPreset) {
+      case 'galaxy': {
+        const radius = Math.random() * spread;
+        const branch = Math.floor(Math.random()*3) / 3 * Math.PI * 2;
+        const spin = radius * 0.5;
+        const rx = (Math.random()-0.5)*0.5, rz = (Math.random()-0.5)*0.5;
+        positions[i3] = Math.cos(branch+spin)*radius + rx;
+        positions[i3+1] = (Math.random()-0.5)*0.5;
+        positions[i3+2] = Math.sin(branch+spin)*radius + rz;
+        const mix = radius / spread;
+        const ic = new THREE.Color(0xf97316), oc = new THREE.Color(0x8b5cf6);
+        const pc = ic.clone().lerp(oc, mix);
+        colors[i3]=pc.r; colors[i3+1]=pc.g; colors[i3+2]=pc.b;
+        break;
+      }
+      case 'snow': {
+        positions[i3] = (Math.random()-0.5)*spread*2;
+        positions[i3+1] = Math.random()*spread*2;
+        positions[i3+2] = (Math.random()-0.5)*spread*2;
+        colors[i3]=0.9; colors[i3+1]=0.9; colors[i3+2]=1;
+        break;
+      }
+      case 'fire': {
+        positions[i3] = (Math.random()-0.5)*spread*0.5;
+        positions[i3+1] = Math.random()*spread;
+        positions[i3+2] = (Math.random()-0.5)*spread*0.5;
+        const t = Math.random();
+        const fc = new THREE.Color().setHSL(0.07*(1-t), 1, 0.4+t*0.3);
+        colors[i3]=fc.r; colors[i3+1]=fc.g; colors[i3+2]=fc.b;
+        break;
+      }
+      case 'explosion': {
+        const theta = Math.random()*Math.PI*2, phi = Math.acos(2*Math.random()-1);
+        const r = Math.random()*spread;
+        positions[i3] = r*Math.sin(phi)*Math.cos(theta);
+        positions[i3+1] = r*Math.sin(phi)*Math.sin(theta);
+        positions[i3+2] = r*Math.cos(phi);
+        const ec = new THREE.Color().setHSL(Math.random()*0.1, 1, 0.5);
+        colors[i3]=ec.r; colors[i3+1]=ec.g; colors[i3+2]=ec.b;
+        break;
+      }
+      case 'matrix': {
+        positions[i3] = (Math.random()-0.5)*spread*2;
+        positions[i3+1] = (Math.random()-0.5)*spread*2;
+        positions[i3+2] = (Math.random()-0.5)*0.1;
+        colors[i3]=0; colors[i3+1]=0.8+Math.random()*0.2; colors[i3+2]=0;
+        break;
+      }
+      case 'dna': {
+        const t = (i/count)*Math.PI*8;
+        const strand = i%2===0 ? 0 : Math.PI;
+        positions[i3] = Math.cos(t+strand)*spread*0.3;
+        positions[i3+1] = (t/(Math.PI*8))*spread*2 - spread;
+        positions[i3+2] = Math.sin(t+strand)*spread*0.3;
+        const dc = new THREE.Color().setHSL(t/(Math.PI*8), 1, 0.6);
+        colors[i3]=dc.r; colors[i3+1]=dc.g; colors[i3+2]=dc.b;
+        break;
+      }
+    }
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  particlePositions = positions;
+  const mat = new THREE.PointsMaterial({ size: size*0.02, vertexColors: true, transparent:true, opacity:0.85, sizeAttenuation:true });
+  particleSystem = new THREE.Points(geo, mat);
+  scene.add(particleSystem);
+};
+
+function animateParticles() {
+  if(!particleSystem || !particlePositions) return;
+  const speed = parseFloat(document.getElementById('p-speed').value) * 0.001;
+  particleState.time += speed;
+  const pos = particleSystem.geometry.attributes.position.array;
+  const count = pos.length / 3;
+  const spread = parseFloat(document.getElementById('p-spread').value);
+  if(currentPreset === 'snow') {
+    for(let i=0;i<count;i++) { pos[i*3+1] -= speed*2; if(pos[i*3+1] < 0) pos[i*3+1] = spread*2; }
+  } else if(currentPreset === 'fire') {
+    for(let i=0;i<count;i++) { pos[i*3+1] += speed*3; if(pos[i*3+1] > spread) pos[i*3+1] = 0; pos[i*3] += (Math.random()-0.5)*speed; }
+  } else if(currentPreset === 'galaxy') {
+    particleSystem.rotation.y += speed * 0.2;
+    return;
+  } else if(currentPreset === 'matrix') {
+    for(let i=0;i<count;i++) { pos[i*3+1] -= speed*2; if(pos[i*3+1] < -spread) pos[i*3+1] = spread; }
+  }
+  particleSystem.geometry.attributes.position.needsUpdate = true;
+}
+
+// ── PHYSICS ────────────────────────────────────
+function initPhysics() {
+  if(physicsWorld) return;
+  physicsWorld = new CANNON.World({ gravity: new CANNON.Vec3(0, parseFloat(document.getElementById('gravity').value), 0) });
+  physicsActive = true;
+  // Add ground plane
+  const gShape = new CANNON.Plane();
+  const gBody = new CANNON.Body({ mass: 0, shape: gShape });
+  gBody.quaternion.setFromEuler(-Math.PI/2, 0, 0);
+  physicsWorld.addBody(gBody);
+}
+
+function addPhysicsMesh(shape, body, color=0xf97316) {
+  let geo;
+  if(shape instanceof CANNON.Box) {
+    const h = shape.halfExtents;
+    geo = new THREE.BoxGeometry(h.x*2,h.y*2,h.z*2);
+  } else {
+    geo = new THREE.SphereGeometry(shape.radius||0.5,16,16);
+  }
+  const mat = new THREE.MeshStandardMaterial({ color, metalness:0.3, roughness:0.7 });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.castShadow = true;
+  scene.add(mesh);
+  physBodies.push(body);
+  physicsMeshes.push(mesh);
+}
+
+window.physDemo = function(type) {
+  initPhysics();
+  if(type === 'stack') {
+    for(let i=0;i<8;i++) {
+      const shape = new CANNON.Box(new CANNON.Vec3(0.5,0.5,0.5));
+      const body = new CANNON.Body({ mass:1, shape });
+      body.position.set((Math.random()-0.5)*0.2, i*1.1+1, (Math.random()-0.5)*0.2);
+      physicsWorld.addBody(body);
+      addPhysicsMesh(shape, body, Math.random()*0xffffff);
+    }
+  } else if(type === 'rain') {
+    for(let i=0;i<20;i++) {
+      const shape = new CANNON.Sphere(0.4);
+      const body = new CANNON.Body({ mass:1, shape });
+      body.position.set((Math.random()-0.5)*8, 8+Math.random()*6, (Math.random()-0.5)*8);
+      physicsWorld.addBody(body);
+      addPhysicsMesh(shape, body, 0x3b82f6);
+    }
+  } else if(type === 'domino') {
+    for(let i=0;i<12;i++) {
+      const shape = new CANNON.Box(new CANNON.Vec3(0.15,0.7,0.4));
+      const body = new CANNON.Body({ mass:1, shape });
+      body.position.set(i*0.85-5, 0.7, 0);
+      physicsWorld.addBody(body);
+      addPhysicsMesh(shape, body, 0x8b5cf6);
+    }
+    // Push first
+    if(physBodies.length > 0) physBodies[physBodies.length-12].velocity.set(2,0,0);
+  }
+};
+
+window.clearPhysics = function() {
+  physBodies.forEach(b => physicsWorld?.removeBody(b));
+  physicsMeshes.forEach(m => { scene.remove(m); m.geometry.dispose(); m.material.dispose(); });
+  physBodies = []; physicsMeshes = [];
+};
+
+window.updateGravity = function(v) {
+  if(physicsWorld) physicsWorld.gravity.set(0, parseFloat(v), 0);
+};
+
+window.togglePhysicsDebug = function(on) { physDebug = on; };
+
+function dropPhysicsSphere(ray) {
+  if(!physicsWorld) initPhysics();
+  const shape = new CANNON.Sphere(0.4);
+  const body = new CANNON.Body({ mass:2, shape });
+  body.position.set(ray.origin.x+ray.direction.x*5, ray.origin.y+ray.direction.y*5, ray.origin.z+ray.direction.z*5);
+  physicsWorld.addBody(body);
+  addPhysicsMesh(shape, body, 0xec4899);
+}
+
+// ── WEBXR ────────────────────────────────────
+async function checkXRSupport() {
+  const info = document.getElementById('xr-support-info');
+  const detail = document.getElementById('xr-detail');
+  if(!navigator.xr) {
+    info.textContent = '❌ WebXR not supported in this browser.';
+    detail.textContent = 'WebXR requires Chrome/Edge on Android, or a WebXR-capable headset. Safari on iOS does not support WebXR.';
+    return;
+  }
+  const arSupported = await navigator.xr.isSessionSupported('immersive-ar').catch(()=>false);
+  const vrSupported = await navigator.xr.isSessionSupported('immersive-vr').catch(()=>false);
+  let msg = [];
+  if(arSupported) { msg.push('✅ AR supported'); document.getElementById('btn-enter-ar').style.display='inline-flex'; }
+  else msg.push('❌ AR not supported on this device');
+  if(vrSupported) { msg.push('✅ VR supported'); document.getElementById('btn-enter-vr').style.display='inline-flex'; }
+  else msg.push('❌ VR not supported on this device');
+  info.textContent = msg.join(' · ');
+  if(!arSupported && !vrSupported) {
+    detail.textContent = 'For AR: use Chrome on Android with ARCore support. For VR: connect a WebXR-compatible headset. Desktop browsers may require flags.';
+  } else {
+    detail.textContent = 'WebXR mode detected! Use the buttons above to enter immersive mode.';
+  }
+}
+
+window.enterXR = async function(mode) {
+  if(!navigator.xr) { toast('WebXR not supported','err'); return; }
+  try {
+    const type = mode === 'ar' ? 'immersive-ar' : 'immersive-vr';
+    renderer.xr.enabled = true;
+    const session = await navigator.xr.requestSession(type);
+    renderer.xr.setSession(session);
+    canvas.style.display='block';
+    toast('Entering ' + mode.toUpperCase() + ' mode','ok');
+  } catch(e) { toast('XR failed: ' + e.message, 'err'); }
+};
+
+// ── GLOBALS ────────────────────────────────────
+window.toggleFog = window.toggleFog;
+
+function toast(msg, type='') {
+  const el = document.createElement('div');
+  el.className = 'toast' + (type?' '+type:'');
+  el.textContent = msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>el.remove(), 2800);
+}
+
+// Initialize
+document.getElementById('panel-viewer').style.display='none';
+document.getElementById('panel-particles').style.display='none';
+document.getElementById('panel-physics').style.display='none';
+document.getElementById('panel-xr').style.display='none';
+loadParticlePreset('galaxy');
+rebuildParticles();
+// Clear particles initially (scene mode)
+if(particleSystem) { scene.remove(particleSystem); particleSystem=null; }
+
 </script>
 </body>
 </html>
