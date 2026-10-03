@@ -1,292 +1,355 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Playground — Free Online 3D Scene Editor in Browser | Three.js Powered | Universe Invedors Tools</title>
-  <meta name="description" content="Experiment with 3D shapes, materials and lighting in your browser free. Add cubes, spheres and more. Change colours and materials. Orbit, zoom, screenshot. Three.js powered. No install." />
-  <meta name="keywords" content="3D editor online free, browser 3D tool free, Three.js playground online, interactive 3D scene browser, WebGL 3D editor free, online 3D object creator" />
-  <link rel="canonical" href="https://3d.universeinvedors.tech/" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="3D Playground — Free Online Interactive 3D Editor" />
-  <meta property="og:description" content="Experiment with 3D shapes, materials and lighting in your browser. Three.js powered. Free and instant." />
-  <meta property="og:url" content="https://3d.universeinvedors.tech/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#0a0e1a" />
-  <link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any" />
-  <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "3D Playground",
-    "url": "https://3d.universeinvedors.tech",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Web",
-    "browserRequirements": "Requires JavaScript",
-    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-    "publisher": {
-      "@type": "Organization",
-      "name": "Universe Invedors",
-      "url": "https://universeinvedors.tech",
-      "logo": "https://universeinvedors.tech/logo.png",
-      "sameAs": [
-        "https://linkedin.com/company/universe-invedors",
-        "https://github.com/UniverseInvedors"
-      ]
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Universe Invedors", "item": "https://universeinvedors.tech"},
-      {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://universeinvedors.tech/tools"},
-      {"@type": "ListItem", "position": 3, "name": "3D Playground", "item": "https://3d.universeinvedors.tech"}
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "3D Playground",
-    "url": "https://3d.universeinvedors.tech",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Universe Invedors Tools",
-      "url": "https://universeinvedors.tech"
-    }
-  }
-]
-</script>
-  <meta name="google-adsense-account" content="ca-pub-8759032363251002" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:#0a0e1a;color:#e6edf3;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-    .topbar{display:flex;align-items:center;gap:.75rem;padding:.55rem 1rem;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(13,17,23,.97);backdrop-filter:blur(12px);z-index:100;flex-shrink:0;flex-wrap:wrap}
-    .logo{font-size:.82rem;font-weight:700;white-space:nowrap}
-    .btn{padding:.35rem .85rem;border-radius:7px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;transition:all .15s}
-    .btn-screenshot{background:#f97316;color:#000}
-    .btn-screenshot:hover{background:#ea6c10}
-    .main{display:flex;flex:1;overflow:hidden}
-    .sidebar{width:200px;shrink:0;padding:1rem;border-right:1px solid rgba(255,255,255,.08);overflow-y:auto;background:#0d1117;display:flex;flex-direction:column;gap:.85rem}
-    .section-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8b949e;margin-bottom:.35rem}
-    .shape-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.3rem}
-    .shape-btn{padding:.4rem 0;border-radius:7px;font-size:.9rem;cursor:pointer;border:1px solid rgba(255,255,255,.08);background:#161b22;text-align:center;transition:all .15s}
-    .shape-btn:hover,.shape-btn.active{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4)}
-    .mat-btn{width:100%;text-align:left;padding:.45rem .6rem;border-radius:8px;font-size:.78rem;cursor:pointer;border:1px solid rgba(255,255,255,.08);background:#161b22;color:#8b949e;margin-bottom:.25rem;transition:all .15s}
-    .mat-btn:hover,.mat-btn.active{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.35);color:#f97316}
-    .color-row{display:flex;align-items:center;gap:.5rem}
-    .color-row input[type=color]{width:36px;height:36px;border-radius:7px;border:1px solid rgba(255,255,255,.08);background:transparent;cursor:pointer;padding:.15rem}
-    .slider-label{font-size:.72rem;color:#8b949e;margin-bottom:.25rem}
-    input[type=range]{width:100%;accent-color:#f97316}
-    .toggle-row{display:flex;align-items:center;justify-content:space-between}
-    .toggle-row span{font-size:.78rem;color:#8b949e}
-    .toggle{position:relative;width:36px;height:20px;cursor:pointer}
-    .toggle input{opacity:0;width:0;height:0}
-    .toggle-track{position:absolute;inset:0;border-radius:100px;background:#21262d;transition:.2s}
-    .toggle input:checked ~ .toggle-track{background:#f97316}
-    .toggle-thumb{position:absolute;width:14px;height:14px;top:3px;left:3px;background:#fff;border-radius:50%;transition:.2s}
-    .toggle input:checked ~ .toggle-thumb{left:19px}
-    .canvas-wrap{flex:1;position:relative}
-    canvas{width:100%;height:100%;display:block}
-    .loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;background:#0a0e1a}
-    .spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.1);border-top-color:#f97316;border-radius:50%;animation:spin .8s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .hint{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);font-size:.7rem;color:#8b949e;background:rgba(13,17,23,.8);padding:.3rem .75rem;border-radius:100px;pointer-events:none;white-space:nowrap}
-    @media(max-width:640px){.sidebar{display:none}}
-  </style>  <meta name="author" content="Universe Invedors" />
-  <meta name="publisher" content="Universe Invedors" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-  <link rel="sitemap" type="application/xml" href="https://3d.universeinvedors.tech/sitemap.xml" />
-
-  <!-- Open Graph image (required for Google + social sharing previews) -->
-  <meta property="og:image" content="https://universeinvedors.tech/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="3D Playground — Free Online 3D Scene Editor in Browser | Three.js Powered" />
-  <meta property="og:site_name" content="Universe Invedors Tools" />
-  <meta property="og:locale" content="en_US" />
-
-  <!-- Twitter image -->
-  <meta name="twitter:image" content="https://universeinvedors.tech/og-image.jpg" />
-  <meta name="twitter:site" content="@universeinvedors" />
-  <meta name="twitter:creator" content="@universeinvedors" />
-  <meta name="twitter:label1" content="Category" />
-  <meta name="twitter:data1" content="Free Developer Tool" />
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>3D Playground — Free Online 3D Scene Editor | Three.js + model-viewer | Universe Invedors Tools</title>
+<meta name="description" content="Interactive 3D playground in your browser. Create scenes with shapes, materials and lighting using Three.js. Load GLTF/GLB models with model-viewer. Orbit, zoom, screenshot. Free online."/>
+<meta name="keywords" content="3D editor online free,browser 3D tool,Three.js playground,GLTF viewer online,GLB viewer,interactive 3D scene,WebGL 3D editor free,model viewer online"/>
+<link rel="canonical" href="https://3d.universeinvedors.tech/"/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="author" content="Universe Invedors"/>
+<meta property="og:title" content="3D Playground — Free Online 3D Scene Editor"/>
+<meta property="og:description" content="Experiment with 3D shapes, materials and lighting. Load GLTF/GLB models. Three.js powered. Free."/>
+<meta property="og:url" content="https://3d.universeinvedors.tech/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://universeinvedors.tech/og-image.jpg"/>
+<meta property="og:site_name" content="Universe Invedors Tools"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://universeinvedors.tech/og-image.jpg"/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+<link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any"/>
+<meta name="theme-color" content="#090c13"/>
+<meta name="google-adsense-account" content="ca-pub-8759032363251002"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"3D Playground","url":"https://3d.universeinvedors.tech","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"3D Playground","item":"https://3d.universeinvedors.tech"}]}]</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090c13;--surf:#0d1117;--elev:#141b28;--card:#1a2235;--inp:#111827;
+  --t1:#f0f4ff;--t2:#a8b5cc;--t3:#64748b;--t4:#3d4f6e;
+  --acc:#f97316;--acc-h:#fb923c;--acc-glow:rgba(249,115,22,.25);
+  --green:#10b981;--blue:#3b82f6;--violet:#8b5cf6;
+  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.14);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --r:10px;--th:52px;--sw:220px;--tr:180ms cubic-bezier(.4,0,.2,1);
+}
+html{font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--t1);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+.tb{height:var(--th);background:rgba(9,12,19,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;padding:0 .85rem;flex-shrink:0;z-index:200}
+.logo{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--t1);text-decoration:none;white-space:nowrap}
+.logo:hover{color:var(--acc-h);text-decoration:none}
+.sp{flex:1}
+.etabs{display:flex;gap:.1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);padding:3px}
+.et{padding:.26rem .65rem;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t3);white-space:nowrap;transition:all var(--tr)}
+.et:hover{background:rgba(255,255,255,.06);color:var(--t2)}
+.et.active{background:var(--acc);color:#fff;box-shadow:0 0 10px var(--acc-glow)}
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.38rem .85rem;border-radius:var(--r);font-size:.75rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr);white-space:nowrap}
+.bg{background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)}
+.bg:hover{background:rgba(255,255,255,.09);border-color:var(--bh);color:var(--t1)}
+.bp{background:var(--acc);color:#fff}
+.bp:hover{background:var(--acc-h)}
+.bsm{padding:.26rem .6rem;font-size:.68rem}
+/* Layout */
+.main{display:flex;flex:1;overflow:hidden}
+.sb{width:var(--sw);background:var(--surf);border-right:1px solid var(--border);overflow-y:auto;padding:.65rem .55rem;flex-shrink:0}
+.sec{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:.5rem .3rem .2rem}
+/* Shape grid */
+.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:.28rem;margin-bottom:.4rem}
+.sh{padding:.38rem 0;border-radius:8px;font-size:.88rem;cursor:pointer;border:1px solid var(--border);background:var(--card);text-align:center;transition:all var(--tr)}
+.sh:hover,.sh.active{background:rgba(249,115,22,.15);border-color:rgba(249,115,22,.4)}
+/* Mat buttons */
+.mb{width:100%;text-left;padding:.4rem .6rem;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--t3);font-size:.78rem;cursor:pointer;margin-bottom:.25rem;transition:all var(--tr);text-align:left}
+.mb:hover,.mb.active{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:var(--acc-h)}
+/* Slider */
+.sr{margin-bottom:.65rem}
+.srh{display:flex;justify-content:space-between;margin-bottom:.22rem}
+.srl{font-size:.7rem;font-weight:600;color:var(--t3)}
+.srv{font-size:.7rem;color:var(--acc-h);font-weight:700;font-family:monospace}
+input[type=range]{width:100%;accent-color:var(--acc)}
+/* Canvas */
+.cv-wrap{flex:1;position:relative;overflow:hidden}
+canvas#c{width:100%;height:100%;display:block;cursor:grab}
+canvas#c:active{cursor:grabbing}
+.overlay{position:absolute;top:.75rem;left:.75rem;display:flex;gap:.4rem;flex-wrap:wrap}
+.ov-badge{padding:.22rem .55rem;border-radius:6px;font-size:.68rem;font-weight:700;background:rgba(9,12,19,.8);border:1px solid var(--border);color:var(--t3)}
+.loading-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;background:var(--bg)}
+.spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* model-viewer mode */
+#mv-wrap{flex:1;display:none}
+model-viewer{width:100%;height:100%;background-color:#090c13}
+/* Statusbar */
+.statusbar{display:flex;align-items:center;gap:.75rem;padding:.25rem .85rem;background:var(--surf);border-top:1px solid var(--border);font-size:.68rem;color:var(--t3);flex-shrink:0}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.seo-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .75rem;padding:.4rem .85rem;border-top:1px solid var(--border);background:var(--surf);font-size:.67rem;color:var(--t3);flex-shrink:0}
+.seo-footer a{color:var(--t3)}.seo-footer a:hover{color:var(--t2)}
+.sfl{display:flex;flex-wrap:wrap;gap:.2rem .6rem}
+.toasts{position:fixed;bottom:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.4rem;pointer-events:none}
+.toast{padding:.55rem .9rem;border-radius:var(--r);font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--t1);box-shadow:0 8px 32px rgba(0,0,0,.5);animation:tin .22s ease}
+.toast.ok{border-color:rgba(16,185,129,.3);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.3);color:#f87171}
+@keyframes tin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.sb{display:none}}
+</style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">🎲 <a href="https://universeinvedors.tech/tools" style="color:inherit;text-decoration:none">Universe Tools</a> / 3D Playground</div>
-  <div style="flex:1"></div>
-  <button class="btn btn-screenshot" onclick="screenshot()">📷 Screenshot</button>
+<header class="tb">
+  <a href="https://universeinvedors.tech/tools" class="logo">🎲 Universe Tools <span style="color:var(--t4);font-weight:400;font-size:.75rem">/</span> <span style="color:var(--acc-h)">3D Playground</span></a>
+  <div class="etabs">
+    <button class="et active" onclick="setEngine('three',this)">Three.js</button>
+    <button class="et" onclick="setEngine('model',this)">Model Viewer</button>
+  </div>
+  <div class="sp"></div>
+  <div style="display:flex;gap:.35rem">
+    <button class="btn bg bsm" id="load-model-btn" onclick="document.getElementById('model-input').click()" style="display:none">📂 Load GLB</button>
+    <button class="btn bg bsm" onclick="addObject()">+ Object</button>
+    <button class="btn bg bsm" onclick="clearScene()">Clear</button>
+    <button class="btn bp" onclick="screenshot()">📷 Screenshot</button>
+  </div>
+  <input type="file" id="model-input" accept=".glb,.gltf" style="display:none" onchange="loadModel(this.files[0])">
 </header>
 
-<main class="main">
-  <aside class="sidebar">
-    <div>
-      <p class="section-label">Shape</p>
-      <div class="shape-grid">
-        <div class="shape-btn active" onclick="setShape('box',this)" title="Box">⬛</div>
-        <div class="shape-btn" onclick="setShape('sphere',this)" title="Sphere">⚫</div>
-        <div class="shape-btn" onclick="setShape('cylinder',this)" title="Cylinder">🔵</div>
-        <div class="shape-btn" onclick="setShape('torus',this)" title="Torus">◎</div>
-        <div class="shape-btn" onclick="setShape('cone',this)" title="Cone">🔺</div>
-      </div>
+<div class="main">
+  <aside class="sb">
+    <div class="sec" id="shape-sec">Shape</div>
+    <div class="sg" id="shape-grid">
+      <div class="sh active" onclick="setShape('box',this)" title="Box">⬛</div>
+      <div class="sh" onclick="setShape('sphere',this)" title="Sphere">⚫</div>
+      <div class="sh" onclick="setShape('cylinder',this)" title="Cylinder">🔵</div>
+      <div class="sh" onclick="setShape('torus',this)" title="Torus">◎</div>
+      <div class="sh" onclick="setShape('cone',this)" title="Cone">🔺</div>
+      <div class="sh" onclick="setShape('tetra',this)" title="Tetrahedron">◇</div>
+      <div class="sh" onclick="setShape('octa',this)" title="Octahedron">⬡</div>
+      <div class="sh" onclick="setShape('dodeca',this)" title="Dodecahedron">●</div>
+      <div class="sh" onclick="setShape('icosa',this)" title="Icosahedron">⊕</div>
+      <div class="sh" onclick="setShape('tknot',this)" title="Torus Knot">∞</div>
     </div>
-    <div>
-      <p class="section-label">Material</p>
-      <div class="mat-btn active" onclick="setMat('standard',this)">Standard</div>
-      <div class="mat-btn" onclick="setMat('wireframe',this)">Wireframe</div>
-      <div class="mat-btn" onclick="setMat('normal',this)">Normal Map</div>
-      <div class="mat-btn" onclick="setMat('phong',this)">Phong</div>
+    <div class="sec">Material</div>
+    <button class="mb active" onclick="setMat('standard',this)">Standard</button>
+    <button class="mb" onclick="setMat('wireframe',this)">Wireframe</button>
+    <button class="mb" onclick="setMat('normal',this)">Normal Map</button>
+    <button class="mb" onclick="setMat('phong',this)">Phong</button>
+    <button class="mb" onclick="setMat('physical',this)">Physical (PBR)</button>
+    <div class="sec">Color</div>
+    <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem">
+      <input type="color" id="col" value="#f97316" oninput="setColor(this.value)" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);padding:.15rem;background:transparent;cursor:pointer">
+      <span id="col-hex" style="font-size:.75rem;color:var(--t2);font-family:monospace">#f97316</span>
     </div>
-    <div id="colorRow">
-      <p class="section-label">Colour</p>
-      <div class="color-row">
-        <input type="color" id="colorPicker" value="#3b82f6" oninput="setColor(this.value)">
-        <span id="colorHex" style="font-size:.75rem;color:#8b949e;font-family:monospace">#3b82f6</span>
-      </div>
-    </div>
-    <div>
-      <p class="slider-label">Ambient light: <span id="ambVal">50%</span></p>
-      <input type="range" min="0" max="200" value="50" oninput="setAmbient(this.value)">
-    </div>
-    <div class="toggle-row">
-      <span>Auto-rotate</span>
-      <label class="toggle">
-        <input type="checkbox" checked onchange="autoRot=this.checked">
-        <div class="toggle-track"></div>
-        <div class="toggle-thumb"></div>
-      </label>
-    </div>
-    <p style="font-size:.68rem;color:#8b949e">Drag to orbit<br>Scroll to zoom</p>
+    <div class="sec">Lighting</div>
+    <div class="sr"><div class="srh"><span class="srl">Ambient</span><span class="srv" id="v-amb">50%</span></div><input type="range" min="0" max="200" value="50" oninput="setAmbient(this.value)"></div>
+    <div class="sr"><div class="srh"><span class="srl">Point Light</span><span class="srv" id="v-pt">150%</span></div><input type="range" min="0" max="300" value="150" oninput="setPtLight(this.value)"></div>
+    <div class="sr"><div class="srh"><span class="srl">Scale</span><span class="srv" id="v-scale">1.0</span></div><input type="range" min="0.2" max="4" step="0.1" value="1" oninput="setScale(this.value)"></div>
+    <div class="sec">Scene</div>
+    <div class="sr"><div class="srh"><span class="srl">Background</span></div>
+    <input type="color" id="bg-col" value="#090c13" oninput="setBg(this.value)" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);padding:.15rem;background:transparent;cursor:pointer"></div>
+    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;margin-bottom:.4rem">
+      <input type="checkbox" id="show-grid" checked onchange="toggleGrid(this.checked)" style="accent-color:var(--acc)">
+      <span style="font-size:.78rem;color:var(--t2)">Grid</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;margin-bottom:.4rem">
+      <input type="checkbox" id="auto-rot" checked onchange="setAutoRot(this.checked)" style="accent-color:var(--acc)">
+      <span style="font-size:.78rem;color:var(--t2)">Auto-rotate</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer">
+      <input type="checkbox" id="shadows" checked onchange="toggleShadows(this.checked)" style="accent-color:var(--acc)">
+      <span style="font-size:.78rem;color:var(--t2)">Shadows</span>
+    </label>
   </aside>
 
-  <div class="canvas-wrap">
-    <div class="loading-overlay" id="loadingOverlay">
+  <!-- Three.js canvas -->
+  <div class="cv-wrap" id="cv-wrap">
+    <div class="loading-overlay" id="loading">
       <div class="spinner"></div>
-      <p style="font-size:.85rem;color:#8b949e">Loading Three.js…</p>
+      <p style="font-size:.85rem;color:var(--t3)">Loading Three.js…</p>
     </div>
     <canvas id="c"></canvas>
-    <div class="hint">Drag · Orbit &nbsp;|&nbsp; Scroll · Zoom &nbsp;|&nbsp; Touch · Supported</div>
+    <div class="overlay">
+      <span class="ov-badge">Drag orbit</span>
+      <span class="ov-badge">Scroll zoom</span>
+      <span class="ov-badge" id="fps-badge">—fps</span>
+    </div>
   </div>
-</main>
+
+  <!-- model-viewer wrapper -->
+  <div id="mv-wrap">
+    <div id="mv-drop" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px dashed var(--border);border-radius:14px;margin:1rem;flex-direction:column;gap:.75rem;background:var(--surf)"
+      onclick="document.getElementById('model-input').click()"
+      ondragover="event.preventDefault()"
+      ondrop="event.preventDefault();loadModel(event.dataTransfer.files[0])">
+      <div style="font-size:3rem">🎮</div>
+      <p style="font-size:.9rem;font-weight:700">Drop a GLB or GLTF file here</p>
+      <p style="font-size:.8rem;color:var(--t2)">Load your 3D model for inspection</p>
+    </div>
+    <model-viewer id="mv" style="width:100%;height:100%;display:none" camera-controls auto-rotate shadow-intensity="1" exposure="0.8"></model-viewer>
+  </div>
+</div>
+
+<div class="statusbar">
+  <span class="sdot"></span>
+  <span id="status-engine" style="color:var(--acc-h);font-weight:600">Three.js</span>
+  <span id="status-info" style="color:var(--t3)">box · standard</span>
+  <span style="margin-left:auto;font-size:.65rem;color:var(--t4)">Drag to orbit · Scroll to zoom · Touch supported</span>
+</div>
+
+<footer class="seo-footer">
+  <div class="sfl">
+    <a href="https://universeinvedors.tech">Universe Invedors</a>
+    <a href="https://universeinvedors.tech/tools">All Tools</a>
+    <a href="https://code.universeinvedors.tech">Code</a>
+    <a href="https://diagram.universeinvedors.tech">Diagrams</a>
+    <a href="https://chart.universeinvedors.tech">Charts</a>
+    <a href="https://ocr.universeinvedors.tech">OCR</a>
+    <a href="https://pdf.universeinvedors.tech">PDF</a>
+    <a href="https://map.universeinvedors.tech">Maps</a>
+    <a href="https://media.universeinvedors.tech">Media</a>
+  </div>
+  <span>© 2024 Universe Invedors · Three.js · model-viewer · Free 3D tool</span>
+</footer>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- model-viewer web component -->
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169/build/three.module.js'
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.169/examples/jsm/controls/OrbitControls.js'
+import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.169/examples/jsm/loaders/GLTFLoader.js'
 
-const canvas = document.getElementById('c')
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
-renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight)
-renderer.shadowMap.enabled = true
+// Scene setup
+const canvas=document.getElementById('c')
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true})
+renderer.setPixelRatio(Math.min(devicePixelRatio,2))
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap
 
-const scene = new THREE.Scene()
-scene.background = new THREE.Color('#0a0e1a')
+const scene=new THREE.Scene()
+scene.background=new THREE.Color('#090c13')
 
-const camera = new THREE.PerspectiveCamera(60, canvas.parentElement.clientWidth / canvas.parentElement.clientHeight, .1, 100)
-camera.position.set(0, 0, 4)
+const camera=new THREE.PerspectiveCamera(60,1,.1,1000)
+camera.position.set(0,1.5,4)
+
+const controls=new OrbitControls(camera,canvas)
+controls.enableDamping=true; controls.dampingFactor=.05; controls.autoRotate=true; controls.autoRotateSpeed=1.2
 
 // Lights
-const ambient = new THREE.AmbientLight(0xffffff, .5)
-scene.add(ambient)
-const dir = new THREE.DirectionalLight(0xffffff, 1)
-dir.position.set(5,5,5)
-scene.add(dir)
-const point = new THREE.PointLight(0x3b82f6, 1.5, 20)
-point.position.set(-3,3,3)
-scene.add(point)
+const ambient=new THREE.AmbientLight(0xffffff,.5); scene.add(ambient)
+const dirLight=new THREE.DirectionalLight(0xffffff,1.5); dirLight.position.set(5,8,5); dirLight.castShadow=true; scene.add(dirLight)
+const ptLight=new THREE.PointLight(0xf97316,1.5,20); ptLight.position.set(-4,4,3); scene.add(ptLight)
+const blueLight=new THREE.PointLight(0x3b82f6,.8,15); blueLight.position.set(4,-2,-4); scene.add(blueLight)
 
-const grid = new THREE.GridHelper(10,20,0x1e2535,0x1e2535)
-grid.position.y = -1.5
-scene.add(grid)
+// Grid
+const grid=new THREE.GridHelper(20,30,0x1e2535,0x1e2535); scene.add(grid)
 
-let mesh = null, autoRot = true
-let shape = 'box', mat = 'standard', color = '#3b82f6'
+// Shadow receiver
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.ShadowMaterial({opacity:.15,transparent:true}))
+ground.rotation.x=-Math.PI/2; ground.position.y=-1.6; ground.receiveShadow=true; scene.add(ground)
 
-function buildMesh() {
-  if (mesh) scene.remove(mesh)
-  const geos = {box:new THREE.BoxGeometry(1.6,1.6,1.6),sphere:new THREE.SphereGeometry(1,32,32),cylinder:new THREE.CylinderGeometry(.8,.8,1.8,32),torus:new THREE.TorusGeometry(.9,.35,16,100),cone:new THREE.ConeGeometry(.9,1.8,32)}
-  const mats = {standard:new THREE.MeshStandardMaterial({color,metalness:.2,roughness:.5}),wireframe:new THREE.MeshBasicMaterial({color,wireframe:true}),normal:new THREE.MeshNormalMaterial(),phong:new THREE.MeshPhongMaterial({color,shininess:80})}
-  mesh = new THREE.Mesh(geos[shape],mats[mat])
-  scene.add(mesh)
+// State
+let mesh=null, shape='box', mat='standard', color='#f97316', autoRot=true, objects=[], frameCount=0, lastTime=performance.now()
+
+function buildMesh(s,m,c){
+  const geos={box:new THREE.BoxGeometry(1.6,1.6,1.6),sphere:new THREE.SphereGeometry(1,32,32),cylinder:new THREE.CylinderGeometry(.8,.8,1.8,32),torus:new THREE.TorusGeometry(.9,.35,16,100),cone:new THREE.ConeGeometry(.9,1.8,32),tetra:new THREE.TetrahedronGeometry(1.2),octa:new THREE.OctahedronGeometry(1.2),dodeca:new THREE.DodecahedronGeometry(1),icosa:new THREE.IcosahedronGeometry(1.2),tknot:new THREE.TorusKnotGeometry(.8,.25,100,16)}
+  const mats={standard:new THREE.MeshStandardMaterial({color:c,metalness:.2,roughness:.5}),wireframe:new THREE.MeshBasicMaterial({color:c,wireframe:true}),normal:new THREE.MeshNormalMaterial(),phong:new THREE.MeshPhongMaterial({color:c,shininess:80}),physical:new THREE.MeshPhysicalMaterial({color:c,metalness:.8,roughness:.1,clearcoat:1,clearcoatRoughness:.05})}
+  const obj=new THREE.Mesh(geos[s]||geos.box,mats[m]||mats.standard)
+  obj.castShadow=true; obj.receiveShadow=true
+  return obj
 }
-buildMesh()
 
-// Orbit
-let dragging=false,prevMouse={x:0,y:0},sph={theta:0,phi:Math.PI/2},r=4
-canvas.addEventListener('mousedown',e=>{dragging=true;prevMouse={x:e.clientX,y:e.clientY}})
-canvas.addEventListener('mouseup',()=>dragging=false)
-canvas.addEventListener('mousemove',e=>{
-  if(!dragging)return
-  sph.theta-=(e.clientX-prevMouse.x)*.008
-  sph.phi=Math.max(.1,Math.min(Math.PI-.1,sph.phi+(e.clientY-prevMouse.y)*.008))
-  camera.position.set(r*Math.sin(sph.phi)*Math.sin(sph.theta),r*Math.cos(sph.phi),r*Math.sin(sph.phi)*Math.cos(sph.theta))
-  camera.lookAt(0,0,0); prevMouse={x:e.clientX,y:e.clientY}
+function rebuild(){ if(mesh){scene.remove(mesh);mesh=null}; mesh=buildMesh(shape,mat,color); scene.add(mesh); document.getElementById('status-info').textContent=`${shape} · ${mat}` }
+rebuild()
+
+window.setShape=(s,el)=>{shape=s;document.querySelectorAll('.sh').forEach(b=>b.classList.remove('active'));el.classList.add('active');rebuild()}
+window.setMat=(m,el)=>{mat=m;document.querySelectorAll('.mb').forEach(b=>b.classList.remove('active'));el.classList.add('active');rebuild()}
+window.setColor=(c)=>{color=c;document.getElementById('col-hex').textContent=c;rebuild()}
+window.setAmbient=v=>{ambient.intensity=v/100;document.getElementById('v-amb').textContent=Math.round(v)+'%'}
+window.setPtLight=v=>{ptLight.intensity=v/100;document.getElementById('v-pt').textContent=Math.round(v)+'%'}
+window.setScale=v=>{if(mesh)mesh.scale.setScalar(parseFloat(v));document.getElementById('v-scale').textContent=parseFloat(v).toFixed(1)}
+window.setBg=v=>{scene.background=new THREE.Color(v)}
+window.toggleGrid=v=>{grid.visible=v}
+window.setAutoRot=v=>{controls.autoRotate=v}
+window.toggleShadows=v=>{renderer.shadowMap.enabled=v;dirLight.castShadow=v}
+window.addObject=()=>{
+  const shapes=['box','sphere','cylinder','torus','cone','tetra']
+  const s=shapes[Math.floor(Math.random()*shapes.length)]
+  const colors=['#3b82f6','#8b5cf6','#10b981','#f97316','#ec4899','#06b6d4']
+  const c=colors[Math.floor(Math.random()*colors.length)]
+  const obj=buildMesh(s,'standard',c)
+  obj.position.set((Math.random()-.5)*6,(Math.random()-.5)*3,(Math.random()-.5)*4)
+  scene.add(obj); objects.push(obj); toast(`Added ${s}`,'ok')
+}
+window.clearScene=()=>{ objects.forEach(o=>scene.remove(o)); objects=[]; toast('Scene cleared','ok') }
+window.screenshot=()=>{ renderer.render(scene,camera); const a=document.createElement('a'); a.download='3d-scene.png'; a.href=canvas.toDataURL(); a.click(); toast('Screenshot saved','ok') }
+
+// GLTF loading
+const loader=new GLTFLoader()
+window.loadModel=(file)=>{
+  if(!file) return
+  const url=URL.createObjectURL(file)
+  loader.load(url,gltf=>{
+    if(mesh){scene.remove(mesh);mesh=null}
+    objects.forEach(o=>scene.remove(o)); objects=[]
+    const model=gltf.scene
+    const box=new THREE.Box3().setFromObject(model)
+    const s=2/box.getSize(new THREE.Vector3()).length()
+    model.scale.setScalar(s)
+    box.setFromObject(model)
+    const c=box.getCenter(new THREE.Vector3())
+    model.position.sub(c)
+    model.castShadow=true; model.receiveShadow=true
+    scene.add(model); mesh=model
+    toast('Model loaded: '+file.name,'ok')
+  },undefined,err=>toast('Load failed: '+err.message.slice(0,60),'err'))
+}
+
+// Engine switch
+window.setEngine=(eng,btn)=>{
+  document.querySelectorAll('.et').forEach(t=>t.classList.remove('active')); btn.classList.add('active')
+  document.getElementById('cv-wrap').style.display=eng==='three'?'flex':'none'
+  document.getElementById('mv-wrap').style.display=eng==='model'?'flex':'none'
+  document.getElementById('load-model-btn').style.display=eng==='model'?'flex':'none'
+  document.getElementById('status-engine').textContent=eng==='three'?'Three.js':'model-viewer'
+  if(eng==='model'){
+    const mv=document.getElementById('mv')
+    document.getElementById('model-input').onchange=e=>{
+      const f=e.target.files[0]; if(!f) return
+      mv.src=URL.createObjectURL(f)
+      mv.style.display='block'
+      document.getElementById('mv-drop').style.display='none'
+      toast('Model loaded in viewer','ok')
+    }
+  }
+}
+
+// Resize
+const ro=new ResizeObserver(()=>{
+  const w=canvas.parentElement.clientWidth, h=canvas.parentElement.clientHeight
+  renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix()
 })
-canvas.addEventListener('wheel',e=>{ r=Math.max(1.5,Math.min(12,r+e.deltaY*.01)); camera.position.normalize().multiplyScalar(r) })
+ro.observe(canvas.parentElement)
 
-// Touch
-let lt=null
-canvas.addEventListener('touchstart',e=>lt=e.touches[0])
-canvas.addEventListener('touchmove',e=>{
-  if(!lt)return; const t=e.touches[0]
-  sph.theta-=(t.clientX-lt.clientX)*.008
-  sph.phi=Math.max(.1,Math.min(Math.PI-.1,sph.phi+(t.clientY-lt.clientY)*.008))
-  camera.position.set(r*Math.sin(sph.phi)*Math.sin(sph.theta),r*Math.cos(sph.phi),r*Math.sin(sph.phi)*Math.cos(sph.theta))
-  camera.lookAt(0,0,0); lt=t; e.preventDefault()
-},{passive:false})
+document.getElementById('loading').style.display='none'
 
-new ResizeObserver(()=>{
-  renderer.setSize(canvas.parentElement.clientWidth,canvas.parentElement.clientHeight)
-  camera.aspect=canvas.parentElement.clientWidth/canvas.parentElement.clientHeight
-  camera.updateProjectionMatrix()
-}).observe(canvas.parentElement)
-
-document.getElementById('loadingOverlay').style.display = 'none'
-
-function animate() {
+// Animate
+function animate(){
   requestAnimationFrame(animate)
-  if(autoRot&&mesh){mesh.rotation.y+=.008;mesh.rotation.x+=.003}
+  controls.update()
   renderer.render(scene,camera)
+  frameCount++
+  const now=performance.now()
+  if(now-lastTime>=1000){
+    document.getElementById('fps-badge').textContent=Math.round(frameCount*1000/(now-lastTime))+'fps'
+    frameCount=0; lastTime=now
+  }
 }
 animate()
 
-window.setShape=(s,btn)=>{shape=s;document.querySelectorAll('.shape-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');buildMesh()}
-window.setMat=(m,btn)=>{mat=m;document.querySelectorAll('.mat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('colorRow').style.display=m==='normal'?'none':'';buildMesh()}
-window.setColor=(c)=>{color=c;document.getElementById('colorHex').textContent=c;buildMesh()}
-window.setAmbient=(v)=>{ambient.intensity=v/100;document.getElementById('ambVal').textContent=v+'%'}
-window.__autoRot=v=>{autoRot=v}
-Object.defineProperty(window,'autoRot',{set:v=>autoRot=v,get:()=>autoRot})
-window.screenshot=()=>{renderer.render(scene,camera);const a=document.createElement('a');a.download='3d-scene.png';a.href=canvas.toDataURL();a.click()}
+window.toast=(msg,type='')=>{
+  const el=document.createElement('div'); el.className='toast'+(type?' '+type:''); el.textContent=msg
+  document.getElementById('toasts').appendChild(el); setTimeout(()=>el.remove(),2800)
+}
 </script>
-
-<!-- SEO Footer — internal links to main site and sibling tools -->
-<footer style="padding:.75rem 1rem;border-top:1px solid rgba(255,255,255,.07);background:#0a0d13;font-family:'Inter',system-ui,sans-serif;font-size:.72rem;color:#6b7685;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;align-items:center;justify-content:space-between">
-  <div style="display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center">
-    <a href="https://universeinvedors.tech" style="color:#3b82f6;text-decoration:none" rel="noopener">Universe Invedors</a>
-    <span>·</span>
-    <a href="https://universeinvedors.tech/tools" style="color:#8b949e;text-decoration:none">All Tools</a>
-    <span>·</span>
-    <a href="https://code.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Code</a>
-    <a href="https://diagram.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Diagrams</a>
-    <a href="https://chart.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Charts</a>
-    <a href="https://ocr.universeinvedors.tech" style="color:#8b949e;text-decoration:none">OCR</a>
-    <a href="https://pdf.universeinvedors.tech" style="color:#8b949e;text-decoration:none">PDF</a>
-    <a href="https://image.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Image</a>
-    <a href="https://3d.universeinvedors.tech" style="color:#8b949e;text-decoration:none">3D</a>
-    <a href="https://map.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Maps</a>
-    <a href="https://media.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Media</a>
-  </div>
-  <div>
-    <a href="https://universeinvedors.tech/privacy" style="color:#6b7685;text-decoration:none">Privacy</a>
-    &nbsp;·&nbsp;
-    <span>&copy; 2024 Universe Invedors</span>
-  </div>
-</footer>
 </body>
 </html>
