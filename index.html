@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>3D Studio — Scene Builder, GLTF Viewer, Particles, Physics, WebXR | Universe Invedors</title>
+<title>3D Studio � Scene Builder, GLTF Viewer, Particles, Physics, WebXR | Universe Invedors</title>
 <meta name="description" content="Free online 3D studio. Build scenes with Three.js, view GLTF/GLB models, create particle systems, simulate physics with cannon-es, explore WebXR AR/VR. No install needed."/>
 <meta name="keywords" content="3D scene builder online,Three.js playground,GLTF viewer browser,WebXR AR VR,particle system 3D,physics simulation browser,online 3D tool,model viewer web"/>
 <link rel="canonical" href="https://3d.universeinvedors.tech/"/>
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
 <meta name="author" content="Universe Invedors"/>
-<meta property="og:title" content="3D Studio — Scene Builder, Model Viewer, Particles, Physics, WebXR"/>
+<meta property="og:title" content="3D Studio � Scene Builder, Model Viewer, Particles, Physics, WebXR"/>
 <meta property="og:description" content="Three.js powered 3D studio with scene builder, GLTF viewer, particle systems, physics and WebXR."/>
 <meta property="og:url" content="https://3d.universeinvedors.tech/"/>
 <meta property="og:type" content="website"/>
@@ -29,139 +29,96 @@ gtag('js',new Date());gtag('config','G-3GH7524RVW',{page_title:document.title,pa
 function gaEvent(action,category,label,value){gtag('event',action,{event_category:category,event_label:label,value:value});}
 </script>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"3D Studio","url":"https://3d.universeinvedors.tech","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"3D Studio","item":"https://3d.universeinvedors.tech"}]}]</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#090c13;--surf:#0d1117;--elev:#141b28;--card:#1a2235;--inp:#111827;
-  --t1:#f0f4ff;--t2:#a8b5cc;--t3:#64748b;--t4:#3d4f6e;
-  --acc:#f97316;--acc-h:#fb923c;--acc-glow:rgba(249,115,22,.22);
-  --green:#10b981;--blue:#3b82f6;--violet:#8b5cf6;--red:#ef4444;
-  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.13);
-  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
-  --r:8px;--th:50px;--sw:210px;--tr:160ms cubic-bezier(.4,0,.2,1);
+  --bg-base:#03050a;--bg-surface:#080d15;--bg-elevated:#0d1421;--bg-card:#111b2e;--bg-input:#0d1421;
+  --text-1:#f0f4ff;--text-2:#a8b8cf;--text-3:#5a6a82;--text-4:#2e3d54;
+  --accent:#3b82f6;--accent-light:#60a5fa;--accent-subtle:rgba(59,130,246,.12);
+  --accent-border:rgba(59,130,246,.30);--accent-glow:rgba(59,130,246,.22);
+  --green:#10b981;--red:#ef4444;--yellow:#f59e0b;--cyan:#06b6d4;--violet:#8b5cf6;
+  --border:rgba(255,255,255,.07);--border-hover:rgba(255,255,255,.14);--border-focus:rgba(59,130,246,.50);
+  --shadow-md:0 4px 16px rgba(0,0,0,.50);--shadow-lg:0 12px 40px rgba(0,0,0,.60);
+  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',Consolas,monospace;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:18px;
+  --topbar-h:52px;--t:180ms cubic-bezier(.4,0,.2,1);
 }
-html{font-size:16px}
-body{font-family:var(--font);background:var(--bg);color:var(--t1);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
-
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);background:var(--bg-base);color:var(--text-1);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.10);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.20)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
 /* TOPBAR */
-.topbar{height:var(--th);background:rgba(9,12,19,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;padding:0 .75rem;flex-shrink:0;z-index:200}
-.logo{font-size:.82rem;font-weight:700;color:var(--t1);text-decoration:none;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:.4rem}
-.logo:hover{color:var(--acc-h);text-decoration:none}
-.etabs{display:flex;gap:.1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);padding:3px;flex-shrink:1;overflow-x:auto}
-.et{padding:.26rem .65rem;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--t3);white-space:nowrap;transition:all var(--tr)}
-.et:hover{background:rgba(255,255,255,.06);color:var(--t2)}.et.active{background:var(--acc);color:#000;box-shadow:0 0 10px var(--acc-glow)}
-.sp{flex:1}
-.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .75rem;border-radius:var(--r);font-size:.73rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr);white-space:nowrap}
-.bg{background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)}.bg:hover{background:rgba(255,255,255,.09);border-color:var(--bh);color:var(--t1)}
-.bp{background:var(--acc);color:#000}.bp:hover{background:var(--acc-h)}
-.bsm{padding:.22rem .55rem;font-size:.68rem}
-
-/* MAIN LAYOUT */
-.main{display:flex;flex:1;overflow:hidden}
-
-/* LEFT SIDEBAR */
-.sidebar{width:var(--sw);background:var(--surf);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
-.sb-scroll{flex:1;overflow-y:auto;padding:.55rem .45rem}
-.sec{font-size:.61rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--t4);padding:.45rem .35rem .15rem}
-
-/* Shape grid */
-.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:.25rem;margin-bottom:.35rem}
-.sh{padding:.38rem 0;border-radius:7px;font-size:.88rem;cursor:pointer;border:1px solid var(--border);background:var(--card);text-align:center;transition:all var(--tr)}
-.sh:hover{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.3)}.sh.sel{background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.5)}
-
-/* Material buttons */
-.mb{width:100%;text-align:left;padding:.38rem .55rem;border-radius:7px;border:1px solid var(--border);background:var(--card);color:var(--t3);font-size:.76rem;cursor:pointer;margin-bottom:.22rem;transition:all var(--tr)}
-.mb:hover{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.25);color:var(--t2)}.mb.sel{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.35);color:var(--acc-h)}
-
-/* Slider row */
-.sr{margin-bottom:.55rem}
-.srh{display:flex;justify-content:space-between;margin-bottom:.2rem}
-.srl{font-size:.69rem;font-weight:600;color:var(--t3)}.srv{font-size:.69rem;color:var(--acc-h);font-weight:700;font-family:monospace}
-input[type=range]{width:100%;accent-color:var(--acc)}
-input[type=color]{width:100%;height:32px;border-radius:7px;border:1px solid var(--border);padding:.15rem;background:transparent;cursor:pointer}
-.toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
-.tgl-label{font-size:.75rem;color:var(--t2)}
-.tgl{position:relative;width:34px;height:18px;cursor:pointer;flex-shrink:0}
-.tgl input{opacity:0;width:0;height:0}
-.tgl-track{position:absolute;inset:0;border-radius:9px;background:#21262d;transition:.2s}
-.tgl input:checked~.tgl-track{background:var(--acc)}
-.tgl-thumb{position:absolute;width:12px;height:12px;top:3px;left:3px;background:#fff;border-radius:50%;transition:.2s}
-.tgl input:checked~.tgl-thumb{left:19px}
-
-/* Object list */
-.obj-list{display:flex;flex-direction:column;gap:.2rem;margin-top:.25rem}
-.obj-item{display:flex;align-items:center;gap:.4rem;padding:.32rem .45rem;border-radius:6px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all var(--tr);font-size:.74rem;color:var(--t2)}
-.obj-item:hover{border-color:rgba(249,115,22,.25);color:var(--t1)}.obj-item.sel{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.35);color:var(--acc-h)}
-.obj-del{margin-left:auto;background:none;border:none;color:var(--t3);cursor:pointer;font-size:.75rem;padding:.1rem .2rem}
-.obj-del:hover{color:var(--red)}
-
-/* Canvas area */
-.cv-area{flex:1;position:relative;overflow:hidden}
-canvas#c{width:100%;height:100%;display:block}
-
-/* Right properties panel */
-.right-panel{width:190px;background:var(--surf);border-left:1px solid var(--border);flex-shrink:0;overflow-y:auto;padding:.55rem .45rem;display:flex;flex-direction:column;gap:.4rem}
-
-/* Engine panels */
-.ep{display:none;width:100%;height:100%}.ep.active{display:flex}
-
-/* Model viewer wrapper */
-#mv-wrap{flex:1;display:none}
-#mv-wrap.active{display:flex;flex-direction:column}
-.mv-drop{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--border);border-radius:12px;margin:.75rem;cursor:pointer;transition:all var(--tr);text-align:center;padding:2rem}
-.mv-drop:hover,.mv-drop.drag{border-color:var(--acc);background:rgba(249,115,22,.04)}
-model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparent}
-
-/* Particle panel */
-#particle-wrap{display:none;flex:1;flex-direction:column}
-#particle-wrap.active{display:flex}
-.preset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin:.5rem .45rem}
-.preset-btn{padding:.45rem .3rem;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--t3);font-size:.72rem;font-weight:600;text-align:center;cursor:pointer;transition:all var(--tr)}
-.preset-btn:hover{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:var(--t1)}.preset-btn.active{background:rgba(249,115,22,.18);border-color:rgba(249,115,22,.45);color:var(--acc-h)}
-
-/* Physics panel */
-#physics-wrap{display:none;flex:1;flex-direction:column}
-#physics-wrap.active{display:flex}
-.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin:.5rem .45rem}
-.demo-btn{padding:.5rem;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--t3);font-size:.74rem;font-weight:600;text-align:center;cursor:pointer;transition:all var(--tr)}
-.demo-btn:hover{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:var(--t1)}.demo-btn.active{background:rgba(59,130,246,.18);border-color:rgba(59,130,246,.45);color:#60a5fa}
-
-/* WebXR panel */
-#xr-wrap{display:none;flex:1;align-items:center;justify-content:center;text-align:center;padding:2rem}
-#xr-wrap.active{display:flex;flex-direction:column}
-
-/* Status bar */
-.statusbar{display:flex;align-items:center;gap:.7rem;padding:.22rem .75rem;background:var(--surf);border-top:1px solid var(--border);font-size:.67rem;color:var(--t3);flex-shrink:0}
-
-/* Loading overlay */
-.load-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;background:var(--bg);z-index:10}
-.spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Overlay */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:600;display:none;align-items:center;justify-content:center}
-.overlay.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-
-/* SEO footer */
-.seo-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .75rem;padding:.35rem .75rem;border-top:1px solid var(--border);background:var(--surf);font-size:.65rem;color:var(--t3);flex-shrink:0}
-.seo-footer a{color:var(--t3)}.seo-footer a:hover{color:var(--t2);text-decoration:none}.sf-links{display:flex;flex-wrap:wrap;gap:.2rem .6rem}
-
-/* Toasts */
-.toasts{position:fixed;bottom:2.5rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.4rem;pointer-events:none}
-.toast{padding:.5rem .85rem;border-radius:var(--r);font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--t1);box-shadow:0 6px 24px rgba(0,0,0,.5);animation:tin .2s ease}
-.toast.ok{border-color:rgba(16,185,129,.35);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.35);color:#f87171}.toast.info{border-color:rgba(249,115,22,.35);color:var(--acc-h)}
-@keyframes tin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:800px){.sidebar{display:none}.right-panel{display:none}}
-</style>
+.topbar{height:var(--topbar-h);background:rgba(3,5,10,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;padding:0 1rem;flex-shrink:0;z-index:300}
+.topbar-logo{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text-1);flex-shrink:0;transition:opacity var(--t)}
+.topbar-logo:hover{opacity:.8;text-decoration:none}
+.topbar-logo-mark{width:26px;height:26px;border-radius:var(--r-sm);background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-logo-mark svg{width:14px;height:14px}
+.topbar-logo-text{display:flex;flex-direction:column;line-height:1}
+.topbar-logo-company{font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-1)}
+.topbar-logo-tool{font-size:.67rem;font-weight:500;color:var(--text-3);margin-top:1px}
+.topbar-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.topbar-spacer,.sp{flex:1}
+.badge-free{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .55rem;border-radius:9999px;font-size:.67rem;font-weight:700;background:rgba(16,185,129,.10);color:var(--green);border:1px solid rgba(16,185,129,.22)}
+/* ENGINE TABS */
+.etabs{display:flex;gap:.1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r-md);padding:2px;overflow-x:auto;flex-shrink:1}
+.et{display:inline-flex;align-items:center;gap:.3rem;padding:.26rem .7rem;border-radius:7px;font-size:.73rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text-3);white-space:nowrap;transition:all var(--t)}
+.et:hover{background:rgba(255,255,255,.06);color:var(--text-2)}
+.et.active{background:var(--accent);color:#fff;box-shadow:0 0 12px var(--accent-glow)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .85rem;border-radius:var(--r-md);font-size:.78rem;font-weight:600;cursor:pointer;border:none;transition:all var(--t);white-space:nowrap;font-family:var(--font-sans)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:14px;height:14px;flex-shrink:0}
+.bg,.btn-ghost{background:rgba(255,255,255,.05);color:var(--text-2);border:1px solid var(--border)}
+.bg:hover,.btn-ghost:hover{background:rgba(255,255,255,.09);border-color:var(--border-hover);color:var(--text-1)}
+.bp,.btn-primary{background:var(--accent);color:#fff;box-shadow:0 2px 8px var(--accent-glow)}
+.bp:hover,.btn-primary:hover{background:var(--accent-light);box-shadow:0 4px 20px var(--accent-glow)}
+.bgr,.btn-success{background:var(--green);color:#000}
+.bgr:hover,.btn-success:hover{background:#0ea371}
+.bsm,.btn-sm{padding:.28rem .65rem;font-size:.72rem}
+.btn-violet{background:var(--violet);color:#fff}.btn-violet:hover{background:#7c3aed}
+.btn:disabled,.btn[disabled]{opacity:.4;cursor:not-allowed}
+/* PANES */
+.pane{display:flex;flex-direction:column;overflow:hidden}
+.pane-head,.ph{display:flex;align-items:center;gap:.5rem;padding:.42rem 1rem;background:var(--bg-surface);border-bottom:1px solid var(--border);font-size:.69rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);flex-shrink:0}
+.pd,.pane-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.phr,.pane-actions{margin-left:auto;display:flex;gap:.3rem}
+/* FORM */
+.fl,.field-label{font-size:.71rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);margin-bottom:.3rem;display:block}
+.fi,input[type=text],input[type=number],select,textarea{width:100%;padding:.45rem .7rem;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text-1);font-size:.84rem;font-family:var(--font-sans);outline:none;transition:border-color var(--t),box-shadow var(--t)}
+.fi:focus,input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.10)}
+select option{background:var(--bg-elevated)}
+input[type=range]{accent-color:var(--accent);width:100%}
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.1rem 1.25rem}
+.card:hover{border-color:var(--border-hover)}
+/* TOASTS */
+.toasts{position:fixed;bottom:1.25rem;right:1.25rem;z-index:999;display:flex;flex-direction:column;gap:.45rem;pointer-events:none}
+.toast{display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border-radius:var(--r-md);font-size:.8rem;font-weight:600;background:var(--bg-card);border:1px solid var(--border);color:var(--text-1);box-shadow:var(--shadow-lg);animation:toastIn .22s ease;pointer-events:auto}
+.toast.ok{border-color:rgba(16,185,129,.35);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.35);color:#f87171}.toast.info{border-color:var(--accent-border);color:var(--accent-light)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+/* SEO FOOTER */
+.seo-footer,.tool-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem .9rem;padding:.6rem 1rem;border-top:1px solid var(--border);background:var(--bg-surface);font-size:.7rem;color:var(--text-3);flex-shrink:0}
+.seo-footer a,.tool-footer a{color:var(--text-3)}.seo-footer a:hover,.tool-footer a:hover{color:var(--text-2);text-decoration:none}
+.sf-links,.tool-footer-links{display:flex;flex-wrap:wrap;gap:.25rem .65rem}
 </head>
 <body>
 
 <!-- TOPBAR -->
 <header class="topbar">
-  <a href="https://universeinvedors.tech/tools" class="logo">🎲 <span style="color:var(--acc-h)">3D Studio</span></a>
+  <a href="https://universeinvedors.tech/tools" class="topbar-logo" aria-label="All Tools">
+    <div class="topbar-logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+    </div>
+    <div class="topbar-logo-text">
+      <span class="topbar-logo-company">Universe Invedors</span>
+      <span class="topbar-logo-tool">3D Studio</span>
+    </div>
+  </a>
+  <div class="topbar-sep"></div>
   <div class="etabs" id="etabs">
     <button class="et active" id="et-scene" onclick="switchEngine('scene')">Scene Builder</button>
     <button class="et" id="et-model" onclick="switchEngine('model')">Model Viewer</button>
@@ -171,30 +128,30 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
   </div>
   <div class="sp"></div>
   <div style="display:flex;gap:.35rem;align-items:center">
-    <span id="fps-badge" style="font-size:.67rem;color:var(--t4);font-family:monospace">—fps</span>
+    <span id="fps-badge" style="font-size:.67rem;color:var(--t4);font-family:monospace">�fps</span>
     <button class="btn bg bsm" onclick="clearScene()">Clear</button>
-    <button class="btn bp bsm" onclick="screenshot()">📷 Screenshot</button>
+    <button class="btn bp bsm" onclick="screenshot()">?? Screenshot</button>
   </div>
   <input type="file" id="model-input" accept=".glb,.gltf,.obj" style="display:none" onchange="loadModelFile(this.files[0])">
 </header>
 
 <div class="main" id="main-wrap">
 
-  <!-- ── SCENE BUILDER SIDEBAR ─── -->
+  <!-- -- SCENE BUILDER SIDEBAR --- -->
   <aside class="sidebar" id="scene-sidebar">
     <div class="sb-scroll">
       <div class="sec">Add Shape</div>
       <div class="sg" id="shape-grid">
-        <div class="sh" onclick="addShape('box')" title="Box">⬛</div>
-        <div class="sh" onclick="addShape('sphere')" title="Sphere">⚫</div>
-        <div class="sh" onclick="addShape('cylinder')" title="Cylinder">🔵</div>
-        <div class="sh" onclick="addShape('torus')" title="Torus">◎</div>
-        <div class="sh" onclick="addShape('cone')" title="Cone">🔺</div>
-        <div class="sh" onclick="addShape('tetra')" title="Tetrahedron">◇</div>
-        <div class="sh" onclick="addShape('octa')" title="Octahedron">⬡</div>
-        <div class="sh" onclick="addShape('tknot')" title="Torus Knot">∞</div>
-        <div class="sh" onclick="addShape('icosa')" title="Icosahedron">⊕</div>
-        <div class="sh" onclick="addRandomShape()" title="Random">🎲</div>
+        <div class="sh" onclick="addShape('box')" title="Box">?</div>
+        <div class="sh" onclick="addShape('sphere')" title="Sphere">?</div>
+        <div class="sh" onclick="addShape('cylinder')" title="Cylinder">??</div>
+        <div class="sh" onclick="addShape('torus')" title="Torus">?</div>
+        <div class="sh" onclick="addShape('cone')" title="Cone">??</div>
+        <div class="sh" onclick="addShape('tetra')" title="Tetrahedron">?</div>
+        <div class="sh" onclick="addShape('octa')" title="Octahedron">?</div>
+        <div class="sh" onclick="addShape('tknot')" title="Torus Knot">8</div>
+        <div class="sh" onclick="addShape('icosa')" title="Icosahedron">?</div>
+        <div class="sh" onclick="addRandomShape()" title="Random">??</div>
       </div>
 
       <div class="sec">Material</div>
@@ -226,12 +183,12 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
     </div>
   </aside>
 
-  <!-- ── CANVAS / ENGINE AREA ─── -->
+  <!-- -- CANVAS / ENGINE AREA --- -->
   <div class="cv-area" id="cv-area">
 
     <!-- Scene Builder Canvas -->
     <canvas id="c" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
-    <div class="load-ov" id="load-ov"><div class="spinner"></div><p style="font-size:.85rem;color:var(--t3)">Loading Three.js…</p></div>
+    <div class="load-ov" id="load-ov"><div class="spinner"></div><p style="font-size:.85rem;color:var(--t3)">Loading Three.js�</p></div>
 
     <!-- Model Viewer -->
     <div id="mv-wrap">
@@ -240,9 +197,9 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
         ondragover="event.preventDefault();this.classList.add('drag')"
         ondragleave="this.classList.remove('drag')"
         ondrop="event.preventDefault();this.classList.remove('drag');loadModelFile(event.dataTransfer.files[0])">
-        <div style="font-size:3rem;margin-bottom:.75rem">🎮</div>
+        <div style="font-size:3rem;margin-bottom:.75rem">??</div>
         <h2 style="font-size:.95rem;font-weight:700;margin-bottom:.35rem">Drop a GLB or GLTF file here</h2>
-        <p style="font-size:.8rem;color:var(--t2)">Load your 3D model — orbit, zoom, inspect animations</p>
+        <p style="font-size:.8rem;color:var(--t2)">Load your 3D model � orbit, zoom, inspect animations</p>
         <p style="margin-top:.5rem;font-size:.72rem;color:var(--t3)">or click to browse files</p>
       </div>
       <model-viewer id="mv" style="width:100%;height:100%;display:none;background:#090c13" camera-controls auto-rotate shadow-intensity="1" exposure="0.8"></model-viewer>
@@ -251,12 +208,12 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
     <!-- Particle Lab -->
     <div id="particle-wrap">
       <div class="preset-grid">
-        <div class="preset-btn active" id="pp-galaxy" onclick="setParticlePreset('galaxy')">🌌 Galaxy</div>
-        <div class="preset-btn" id="pp-snow" onclick="setParticlePreset('snow')">❄ Snow</div>
-        <div class="preset-btn" id="pp-fire" onclick="setParticlePreset('fire')">🔥 Fire</div>
-        <div class="preset-btn" id="pp-matrix" onclick="setParticlePreset('matrix')">💻 Matrix</div>
-        <div class="preset-btn" id="pp-dna" onclick="setParticlePreset('dna')">🧬 DNA</div>
-        <div class="preset-btn" id="pp-stars" onclick="setParticlePreset('stars')">✨ Stars</div>
+        <div class="preset-btn active" id="pp-galaxy" onclick="setParticlePreset('galaxy')">?? Galaxy</div>
+        <div class="preset-btn" id="pp-snow" onclick="setParticlePreset('snow')">? Snow</div>
+        <div class="preset-btn" id="pp-fire" onclick="setParticlePreset('fire')">?? Fire</div>
+        <div class="preset-btn" id="pp-matrix" onclick="setParticlePreset('matrix')">?? Matrix</div>
+        <div class="preset-btn" id="pp-dna" onclick="setParticlePreset('dna')">?? DNA</div>
+        <div class="preset-btn" id="pp-stars" onclick="setParticlePreset('stars')">? Stars</div>
       </div>
       <div style="padding:0 .65rem;display:flex;flex-wrap:wrap;gap:.6rem">
         <div style="flex:1;min-width:140px">
@@ -271,19 +228,19 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
     <!-- Physics -->
     <div id="physics-wrap">
       <div class="demo-grid">
-        <div class="demo-btn active" id="pd-stack" onclick="setPhysicsDemo('stack')">📦 Box Stack</div>
-        <div class="demo-btn" id="pd-rain" onclick="setPhysicsDemo('rain')">🌧 Sphere Rain</div>
-        <div class="demo-btn" id="pd-domino" onclick="setPhysicsDemo('domino')">🁢 Dominos</div>
-        <div class="demo-btn" id="pd-click" onclick="setPhysicsDemo('click')">👆 Click to Add</div>
+        <div class="demo-btn active" id="pd-stack" onclick="setPhysicsDemo('stack')">?? Box Stack</div>
+        <div class="demo-btn" id="pd-rain" onclick="setPhysicsDemo('rain')">?? Sphere Rain</div>
+        <div class="demo-btn" id="pd-domino" onclick="setPhysicsDemo('domino')">?? Dominos</div>
+        <div class="demo-btn" id="pd-click" onclick="setPhysicsDemo('click')">?? Click to Add</div>
       </div>
       <canvas id="physics-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:none"></canvas>
     </div>
 
     <!-- WebXR -->
     <div id="xr-wrap">
-      <div style="font-size:3rem;margin-bottom:1rem">🥽</div>
-      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem">WebXR — AR &amp; VR</h2>
-      <p style="font-size:.85rem;color:var(--t2);max-width:380px;margin-bottom:1.25rem;line-height:1.6" id="xr-msg">Checking device support…</p>
+      <div style="font-size:3rem;margin-bottom:1rem">??</div>
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem">WebXR � AR &amp; VR</h2>
+      <p style="font-size:.85rem;color:var(--t2);max-width:380px;margin-bottom:1.25rem;line-height:1.6" id="xr-msg">Checking device support�</p>
       <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
         <button class="btn" id="btn-ar" style="background:var(--green);color:#000;font-size:.88rem;padding:.6rem 1.5rem;display:none" onclick="enterXR('immersive-ar')">Enter AR</button>
         <button class="btn" id="btn-vr" style="background:var(--violet);color:#fff;font-size:.88rem;padding:.6rem 1.5rem;display:none" onclick="enterXR('immersive-vr')">Enter VR</button>
@@ -293,14 +250,14 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
         <ul style="font-size:.78rem;color:var(--t2);line-height:2;padding-left:1.25rem">
           <li>AR: Android Chrome with ARCore, or iOS Safari 15.4+</li>
           <li>VR: Meta Quest browser, or desktop Chrome/Edge with headset</li>
-          <li>HTTPS required (this site uses HTTPS ✓)</li>
+          <li>HTTPS required (this site uses HTTPS ?)</li>
           <li>Camera permission for AR mode</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ── RIGHT PANEL (object properties) ─── -->
+  <!-- -- RIGHT PANEL (object properties) --- -->
   <aside class="right-panel" id="right-panel">
     <div style="font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--t4);padding:.2rem 0 .4rem">Properties</div>
     <p id="rp-hint" style="font-size:.72rem;color:var(--t3)">Click an object in the list to edit its properties.</p>
@@ -311,14 +268,14 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
         <input type="number" id="py" placeholder="Y" step="0.1" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72rem;outline:none" onchange="applyTransform()">
         <input type="number" id="pz" placeholder="Z" step="0.1" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72rem;outline:none" onchange="applyTransform()">
       </div>
-      <div class="sec">Rotation (°)</div>
+      <div class="sec">Rotation (�)</div>
       <div style="display:flex;gap:.3rem;margin-bottom:.4rem">
         <input type="number" id="rx" placeholder="X" step="5" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72rem;outline:none" onchange="applyTransform()">
         <input type="number" id="ry" placeholder="Y" step="5" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72rem;outline:none" onchange="applyTransform()">
         <input type="number" id="rz" placeholder="Z" step="5" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72fm;outline:none" onchange="applyTransform()">
       </div>
       <div class="sr"><div class="srh"><span class="srl">Scale</span><span class="srv" id="v-sel-scale">1.0</span></div><input type="range" id="r-sel-scale" min="0.1" max="5" step="0.1" value="1" oninput="setSelScale(this.value)"></div>
-      <button class="btn bg bsm" style="width:100%;justify-content:center;margin-top:.3rem" onclick="deleteSelected()">🗑 Delete</button>
+      <button class="btn bg bsm" style="width:100%;justify-content:center;margin-top:.3rem" onclick="deleteSelected()">?? Delete</button>
     </div>
     <!-- Particle controls in right panel when particle engine active -->
     <div id="rp-particle-note" style="display:none;font-size:.72rem;color:var(--t3)">Controls are shown above the canvas.</div>
@@ -330,7 +287,7 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
   <span id="sb-engine" style="color:var(--acc-h);font-weight:600">Scene Builder</span>
   <span id="sb-obj" style="color:var(--t3)">0 objects</span>
   <span id="sb-cam" style="color:var(--t4)"></span>
-  <span style="margin-left:auto;font-size:.65rem;color:var(--t4)">Drag: orbit · Scroll: zoom · Touch: supported</span>
+  <span style="margin-left:auto;font-size:.65rem;color:var(--t4)">Drag: orbit � Scroll: zoom � Touch: supported</span>
 </div>
 
 <!-- SEO Footer -->
@@ -347,7 +304,7 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
     <a href="https://map.universeinvedors.tech">Maps</a>
     <a href="https://media.universeinvedors.tech">Media</a>
   </div>
-  <span>© 2024 Universe Invedors · Three.js · cannon-es · model-viewer · Free 3D Tool</span>
+  <span>� 2024 Universe Invedors � Three.js � cannon-es � model-viewer � Free 3D Tool</span>
 </footer>
 
 <div class="toasts" id="toasts"></div>
@@ -355,10 +312,10 @@ model-viewer{width:100%;height:100%;background:#090c13;--poster-color:transparen
 <!-- model-viewer web component -->
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
-<!-- ── ALL LOGIC IN A SINGLE REGULAR <script> ─────────────────────────────
-     CRITICAL: NOT type="module" — so onclick attributes can call functions  -->
+<!-- -- ALL LOGIC IN A SINGLE REGULAR <script> -----------------------------
+     CRITICAL: NOT type="module" � so onclick attributes can call functions  -->
 <script>
-/* ── GLOBALS ──────────────────────────────────────────────────── */
+/* -- GLOBALS ---------------------------------------------------- */
 var THREE_MODULE = null   // loaded async
 var scene, camera, renderer, controls
 var ambientLight, ptLight, blueLight, dirLight
@@ -385,7 +342,7 @@ var particleAnimId = 0
 var physicsFrameId = 0
 var physicsDemo = 'stack'
 
-/* ── ENGINE SWITCHER (called from onclick) ────────────────────── */
+/* -- ENGINE SWITCHER (called from onclick) ---------------------- */
 function switchEngine(eng) {
   currentEngine = eng
 
@@ -446,7 +403,7 @@ function switchEngine(eng) {
   }
 }
 
-/* ── THREE.JS SCENE BUILDER ──────────────────────────────────── */
+/* -- THREE.JS SCENE BUILDER ------------------------------------ */
 function initScene(THREE, OrbitControls) {
   var canvas = document.getElementById('c')
   var wrap = document.getElementById('cv-area')
@@ -557,7 +514,7 @@ function buildMat(THREE, mat, color) {
 }
 
 function addShape(shape) {
-  if (!THREE_MODULE || !sceneReady) { toast('Scene loading…', 'err'); return }
+  if (!THREE_MODULE || !sceneReady) { toast('Scene loading�', 'err'); return }
   var THREE = THREE_MODULE
   var geo = buildGeo(THREE, shape)
   var mat = buildMat(THREE, currentMat, currentColor)
@@ -624,7 +581,7 @@ function renderObjList() {
   el.innerHTML = objects.map(function(o) {
     return '<div class="obj-item' + (selectedObj && selectedObj.id === o.id ? ' sel' : '') + '" onclick="selectObj(' + o.id + ')">' +
       '<span>' + o.name + '</span>' +
-      '<button class="obj-del" onclick="event.stopPropagation();deleteObj(' + o.id + ')">✕</button>' +
+      '<button class="obj-del" onclick="event.stopPropagation();deleteObj(' + o.id + ')">?</button>' +
       '</div>'
   }).join('')
 }
@@ -706,7 +663,7 @@ function screenshot() {
   }
 }
 
-/* ── MODEL VIEWER ──────────────────────────────────────────── */
+/* -- MODEL VIEWER -------------------------------------------- */
 function loadModelFile(file) {
   if (!file) return
   var ext = file.name.split('.').pop().toLowerCase()
@@ -720,7 +677,7 @@ function loadModelFile(file) {
   mv.addEventListener('error', function() { toast('Failed to load model', 'err'); mv.style.display = 'none'; drop.style.display = 'flex' }, { once: true })
 }
 
-/* ── PARTICLE LAB ──────────────────────────────────────────── */
+/* -- PARTICLE LAB -------------------------------------------- */
 var pCanvas, pCtx, pW, pH, pParticles = [], pAnimId = 0
 
 var PARTICLE_PRESETS = {
@@ -808,7 +765,7 @@ function animateMatrix() {
   pCtx.fillRect(0, 0, pW, pH)
   pCtx.fillStyle = '#10b981'
   pCtx.font = matrixFont + 'px monospace'
-  var chars = '01アイウエオカキクケコ'
+  var chars = '01??????????'
   for (var i = 0; i < matrixCols.length; i++) {
     var ch = chars[Math.floor(Math.random() * chars.length)]
     pCtx.fillText(ch, i * matrixFont, matrixCols[i] * matrixFont)
@@ -858,7 +815,7 @@ function updateParticleSettings() {
   startParticles() // rebuild particles with new count
 }
 
-/* ── PHYSICS (using cannon-es UMD build) ─────────────────────── */
+/* -- PHYSICS (using cannon-es UMD build) ----------------------- */
 var physWorld, physBodies = [], physMeshes = []
 var physScene, physCamera, physRenderer, physControls
 
@@ -872,7 +829,7 @@ function setPhysicsDemo(name) {
 
 function startPhysics() {
   cancelAnimationFrame(physicsFrameId)
-  // Load cannon-es UMD (not ES module) — correct CDN path
+  // Load cannon-es UMD (not ES module) � correct CDN path
   if (window.CANNON) {
     initPhysicsScene()
   } else {
@@ -885,7 +842,7 @@ function startPhysics() {
 }
 
 function initPhysicsScene() {
-  if (!THREE_MODULE) { toast('3D engine still loading…', 'err'); return }
+  if (!THREE_MODULE) { toast('3D engine still loading�', 'err'); return }
   var THREE = THREE_MODULE
   var pCanvas = document.getElementById('physics-canvas')
   var wrap = document.getElementById('cv-area')
@@ -996,7 +953,7 @@ function animatePhysics() {
   physRenderer.render(physScene, physCamera)
 }
 
-/* ── WEBXR ─────────────────────────────────────────────────── */
+/* -- WEBXR --------------------------------------------------- */
 function checkXR() {
   var msg = document.getElementById('xr-msg')
   var btnAR = document.getElementById('btn-ar')
@@ -1005,7 +962,7 @@ function checkXR() {
     msg.textContent = 'WebXR is not supported by your browser. Try Chrome on Android for AR, or a WebXR-capable headset for VR.'
     return
   }
-  msg.textContent = 'Checking device capabilities…'
+  msg.textContent = 'Checking device capabilities�'
   var arSupported = false, vrSupported = false, checked = 0
   function done() {
     checked++
@@ -1033,7 +990,7 @@ function enterXR(mode) {
     .catch(function(e) { toast('XR failed: ' + e.message, 'err') })
 }
 
-/* ── TOAST ─────────────────────────────────────────────────── */
+/* -- TOAST --------------------------------------------------- */
 function toast(msg, type) {
   var el = document.createElement('div')
   el.className = 'toast' + (type ? ' ' + type : '')
@@ -1042,7 +999,7 @@ function toast(msg, type) {
   setTimeout(function() { el.remove() }, 2800)
 }
 
-/* ── LOAD THREE.JS AS ES MODULE, EXPOSE GLOBALLY ─────────────
+/* -- LOAD THREE.JS AS ES MODULE, EXPOSE GLOBALLY -------------
    We use dynamic import then store in globals so regular <script>
    onclick handlers can access THREE, OrbitControls, GLTFLoader     */
 (function loadThree() {
@@ -1072,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 </html>
 <script>
-// GA4 Custom Events — 3D Viewer
+// GA4 Custom Events � 3D Viewer
 (function(){
   // Track model file uploads
   document.querySelectorAll('input[type="file"]').forEach(function(fi){
@@ -1102,3 +1059,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
+
+
+/* 3D-specific */
+.main{display:flex;flex:1;overflow:hidden}
+.sidebar{width:210px;background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.sb-scroll{flex:1;overflow-y:auto;padding:.55rem .45rem}
+.sec{font-size:.61rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text-4);padding:.45rem .35rem .15rem}
+.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:.25rem;margin-bottom:.35rem}
+.sh{padding:.38rem 0;border-radius:7px;font-size:.88rem;cursor:pointer;border:1px solid var(--border);background:var(--bg-card);text-align:center;transition:all var(--t)}
+.sh:hover{background:var(--accent-subtle);border-color:var(--accent-border)}.sh.sel{background:var(--accent-subtle);border-color:var(--accent-border)}
+.mb{width:100%;text-align:left;padding:.38rem .55rem;border-radius:7px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-3);font-size:.76rem;cursor:pointer;margin-bottom:.22rem;transition:all var(--t)}
+.mb:hover{background:var(--accent-subtle);border-color:var(--accent-border);color:var(--text-2)}.mb.sel{background:var(--accent-subtle);border-color:var(--accent-border);color:var(--accent-light)}
+.sr{margin-bottom:.55rem}.srh{display:flex;justify-content:space-between;margin-bottom:.2rem}
+.srl{font-size:.69rem;font-weight:600;color:var(--text-3)}.srv{font-size:.69rem;color:var(--accent-light);font-weight:700;font-family:monospace}
+</style>
