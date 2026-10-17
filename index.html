@@ -134,7 +134,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
   <div style="display:flex;gap:.35rem;align-items:center">
     <span id="fps-badge" style="font-size:.67rem;color:var(--t4);font-family:monospace">�fps</span>
     <button class="btn bg bsm" onclick="clearScene()">Clear</button>
-    <button class="btn bp bsm" onclick="screenshot()">?? Screenshot</button>
+    <button class="btn bp bsm" onclick="screenshot()">Screenshot</button>
   </div>
   <input type="file" id="model-input" accept=".glb,.gltf,.obj" style="display:none" onchange="loadModelFile(this.files[0])">
   <button class="tour-btn" onclick="startTour()" aria-label="Start guided tour" title="Take a quick tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Tour</button>
@@ -213,12 +213,12 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <!-- Particle Lab -->
     <div id="particle-wrap">
       <div class="preset-grid">
-        <div class="preset-btn active" id="pp-galaxy" onclick="setParticlePreset('galaxy')">?? Galaxy</div>
-        <div class="preset-btn" id="pp-snow" onclick="setParticlePreset('snow')">? Snow</div>
-        <div class="preset-btn" id="pp-fire" onclick="setParticlePreset('fire')">?? Fire</div>
-        <div class="preset-btn" id="pp-matrix" onclick="setParticlePreset('matrix')">?? Matrix</div>
-        <div class="preset-btn" id="pp-dna" onclick="setParticlePreset('dna')">?? DNA</div>
-        <div class="preset-btn" id="pp-stars" onclick="setParticlePreset('stars')">? Stars</div>
+        <div class="preset-btn active" id="pp-galaxy" onclick="setParticlePreset('galaxy')">Galaxy</div>
+        <div class="preset-btn" id="pp-snow" onclick="setParticlePreset('snow')">Snow</div>
+        <div class="preset-btn" id="pp-fire" onclick="setParticlePreset('fire')">Fire</div>
+        <div class="preset-btn" id="pp-matrix" onclick="setParticlePreset('matrix')">Matrix</div>
+        <div class="preset-btn" id="pp-dna" onclick="setParticlePreset('dna')">DNA</div>
+        <div class="preset-btn" id="pp-stars" onclick="setParticlePreset('stars')">Stars</div>
       </div>
       <div style="padding:0 .65rem;display:flex;flex-wrap:wrap;gap:.6rem">
         <div style="flex:1;min-width:140px">
@@ -233,10 +233,10 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <!-- Physics -->
     <div id="physics-wrap">
       <div class="demo-grid">
-        <div class="demo-btn active" id="pd-stack" onclick="setPhysicsDemo('stack')">?? Box Stack</div>
-        <div class="demo-btn" id="pd-rain" onclick="setPhysicsDemo('rain')">?? Sphere Rain</div>
-        <div class="demo-btn" id="pd-domino" onclick="setPhysicsDemo('domino')">?? Dominos</div>
-        <div class="demo-btn" id="pd-click" onclick="setPhysicsDemo('click')">?? Click to Add</div>
+        <div class="demo-btn active" id="pd-stack" onclick="setPhysicsDemo('stack')">Box Stack</div>
+        <div class="demo-btn" id="pd-rain" onclick="setPhysicsDemo('rain')">Sphere Rain</div>
+        <div class="demo-btn" id="pd-domino" onclick="setPhysicsDemo('domino')">Dominos</div>
+        <div class="demo-btn" id="pd-click" onclick="setPhysicsDemo('click')">Click to Add</div>
       </div>
       <canvas id="physics-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:none"></canvas>
     </div>
@@ -280,7 +280,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
         <input type="number" id="rz" placeholder="Z" step="5" style="flex:1;padding:.32rem .4rem;background:var(--inp);border:1px solid var(--border);border-radius:6px;color:var(--t1);font-size:.72fm;outline:none" onchange="applyTransform()">
       </div>
       <div class="sr"><div class="srh"><span class="srl">Scale</span><span class="srv" id="v-sel-scale">1.0</span></div><input type="range" id="r-sel-scale" min="0.1" max="5" step="0.1" value="1" oninput="setSelScale(this.value)"></div>
-      <button class="btn bg bsm" style="width:100%;justify-content:center;margin-top:.3rem" onclick="deleteSelected()">?? Delete</button>
+      <button class="btn bg bsm" style="width:100%;justify-content:center;margin-top:.3rem" onclick="deleteSelected()">Delete</button>
     </div>
     <!-- Particle controls in right panel when particle engine active -->
     <div id="rp-particle-note" style="display:none;font-size:.72rem;color:var(--t3)">Controls are shown above the canvas.</div>
